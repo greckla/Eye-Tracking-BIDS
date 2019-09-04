@@ -1,0 +1,17 @@
+{
+	"SamplingFrequency": 1000,
+	"StartMessage": "FACESTART",
+	"EndMessage": "ENDPRESENTATION",
+	"EventIdentifier": "EFIX",
+	"Manifacturer": "SR-Research",
+	"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",
+	"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B Mod:2019.07.10 14:33 MESZ",
+	"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",
+	"Instructions":"Natural viewing of matrices, no special task",
+	"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",
+	"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",
+	"Calibration type": "HV13, HV9",
+	"Recorded eye": "LEFT, RIGHT",
+	"Maximal calibration error (accross all calibrations)": 0.97,
+	"Average calibration error (mean accross all calibrations)": 0.303
+}

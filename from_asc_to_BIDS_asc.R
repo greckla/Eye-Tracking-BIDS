@@ -1,7 +1,11 @@
 
 #TODO
 # check question performance
-# Calibrartion: which to present? now only the first ... probably not the best
+# Calibrartion: which to present? now only the first ... probably not the best 
+#       -> KG: optimally match to the message, for which block was the calibration done or match to the time...? 
+#       -> KG: in the present task different kinds of calibration used HV9 and HV13 and both eyes recorded..
+#       -> KG: script changed --> one will get an extra dataframe with all calibrations for both eyes
+#           and in the general info file, the summarized data from all calibrations are reported       
 
 input_folder = "./hyperlinks_raw_data/"
 output_folder = "./hyperlinks_raw_data_BIDS/"
@@ -20,8 +24,9 @@ cb_cd = function(path){
 
 
 for (i in 1:length(input_file_names)){
-  vp = strsplit(input_file_names[i],split="_")[[1]] [1]
-  aq = strsplit(input_file_names[i],split="_")[[1]] [2]
+  id = strsplit(input_file_names[i],split=".asc")[[1]] [1]
+  vp = strsplit(id,split="_")[[1]] [1]
+  aq = strsplit(id,split="_")[[1]] [2]
   #print(vp)
   #print(aq)
   
@@ -37,32 +42,75 @@ for (i in 1:length(input_file_names)){
   #get cal info
   tmp_file = readLines(paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.asc",sep=""))
   tmp_file_cal = strsplit(tmp_file[grepl("!CAL VALIDATION",tmp_file)],split = " ")
-  calibration = tmp_file_cal[[1]][4]
-  eye = tmp_file_cal[[1]][6]
-  error_max = tmp_file_cal[[1]][9]
-  error_avg = tmp_file_cal[[1]][11]
   
-  sampl_freq = round(as.numeric(strsplit(tmp_file[grepl("SAMPLES	GAZE	RIGHT	RATE",tmp_file)],split = "\t")[[1]][5],0))
+  #possibly you need to specify the correct value as the order of variables can variate
+  for (cal_nr in 1:length(tmp_file_cal)){
+    if (cal_nr ==1){
+      calibration = tmp_file_cal[[1]][4]
+      eye = tmp_file_cal[[cal_nr]][6]
+      error_max = tmp_file_cal[[cal_nr]][12]
+      error_avg = tmp_file_cal[[cal_nr]][10]
+      time_cal = as.numeric(strsplit(tmp_file_cal[[cal_nr]], split="\t")[[1]][2], split=" ")
+    }
+    else if(tmp_file_cal[[cal_nr]][6]=="RIGHT"){
+      calibration[cal_nr] = tmp_file_cal[[cal_nr]][4]
+      eye[cal_nr] = tmp_file_cal[[cal_nr]][6]
+      error_max[cal_nr] = tmp_file_cal[[cal_nr]][11]
+      error_avg[cal_nr] = tmp_file_cal[[cal_nr]][9]
+      time_cal[cal_nr] = as.numeric(strsplit(tmp_file_cal[[cal_nr]], split="\t")[[1]][2], split=" ")
+    }
+    else{
+      calibration[cal_nr] = tmp_file_cal[[cal_nr]][4]
+      eye[cal_nr] = tmp_file_cal[[cal_nr]][6]
+      error_max[cal_nr] = tmp_file_cal[[cal_nr]][12]
+      error_avg[cal_nr] = tmp_file_cal[[cal_nr]][10]
+      time_cal[cal_nr] = as.numeric(strsplit(tmp_file_cal[[cal_nr]], split="\t")[[1]][2], split=" ")
+  }
+  }
   
-  write(paste('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t"StartMessage": "MASKSCREEN_START",\n\t"EndMessage": "TRIAL_RESULT",\n\t"EventIdentifier": "EFIX",\n\t'
-              ,'"Manifacturer": "SR-Research",\n\t"ManufacturersModelName": "EYELINK II CL v4.51 Mar 13 2010",\n\t"SoftwareVersions": "SREB1.10.165 WIN32 LID:5C0F381A Mod:2013.11.08 08:51 MEZ",\n\t'
-              ,'"TaskDescription": "Silent reading with catch trials including a invisible boundary manipulation",\n\t"Instructions":"Read the following sentences as if you were reading a book or a newspaper.",\n\t'
-              ,'"InstitutionName": "University of Salzburg; Department of Psychology",\n\t"InstitutionAddress": "Hellbrunnerstrasse 34; 5020 Salzburg; Austria",\n\t'
-              ,'"Calibration type": "',calibration,'",\n\t"Recorded eye": "',eye,'",\n\t"Maximal calibration error": ',error_max,',\n\t"Average calibration error": ',error_avg
+  cal_df = data.frame(calibration, eye, error_max, error_avg, time_cal)
+   
+  sampl_freq = round(as.numeric(strsplit(tmp_file[grepl("SAMPLES\tGAZE\tLEFT\tRIGHT\tRATE",tmp_file)],split = "\t")[[1]][6],0))
+  
+  cal_df$error_max=as.numeric(as.character(cal_df$error_max))
+  cal_df$error_avg=as.numeric(as.character(cal_df$error_avg))
+ 
+  for(nr in 1:nlevels(cal_df$calibration)){
+   if(nr==1){
+     cal_tmp=levels(cal_df$calibration)[nr]
+     calibration=cal_tmp}
+   else{cal_tmp=levels(cal_df$calibration)[nr]
+   calibration=paste(calibration,cal_tmp, sep=", ")}}
+ 
+  for(nr in 1:nlevels(cal_df$eye)){
+   if(nr==1){
+     eye_tmp=levels(cal_df$eye)[nr]
+     eye=eye_tmp}
+   else{eye_tmp=levels(cal_df$eye)[nr]
+   eye=paste(eye,eye_tmp, sep=", ")}}
+  
+  write(paste('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t"StartMessage": "FACESTART",\n\t"EndMessage": "ENDPRESENTATION",\n\t"EventIdentifier": "EFIX",\n\t'
+              ,'"Manifacturer": "SR-Research",\n\t"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",\n\t"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B Mod:2019.07.10 14:33 MESZ",\n\t'
+              ,'"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",\n\t"Instructions":"Natural viewing of matrices, no special task",\n\t'
+              ,'"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",\n\t"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",\n\t'
+              ,'"Calibration type": "',calibration,'",\n\t"Recorded eye": "',eye,'",\n\t"Maximal calibration error (accross all calibrations)": ',max(cal_df$error_max),',\n\t"Average calibration error (mean accross all calibrations)": ',mean(cal_df$error_avg)
               ,"\n}",sep = "")
         , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.json",sep=""))
   
   
   #get stim info for events file
-  tmp_file_sub_all = tmp_file[grepl("MASKSCREEN_START|TRIAL_RESULT|KEYPRESS",tmp_file)]
-  tmp_file_sub_all = tmp_file_sub_all[!grepl('_ue',tmp_file_sub_all)]
-  tmp_file_sub = tmp_file_sub_all[grepl("MASKSCREEN_START",tmp_file_sub_all)]
+  tmp_file_sub_all = tmp_file[grepl("FACESTART|ENDPRESENTATION",tmp_file)]
+  #tmp_file_sub_all = tmp_file_sub_all[!grepl('_ue',tmp_file_sub_all)] # irrelevant here - no msg´s in the training part
+  tmp_file_sub = tmp_file_sub_all[grepl("FACESTART",tmp_file_sub_all)]
+  
   
   for (ii in 1:length(tmp_file_sub)){
     
+    #info needs to be adjusted according to individual structure of messages!
     time = as.numeric(strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][2], split=" ")[[1]][1])
-    info = strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][2], split=" ")[[1]][3]
-    info = strsplit(info, split="_")
+    info_trial = as.numeric(strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][4], split=" ")[[1]][2])
+    info_blocktrial = as.numeric(strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][3], split=" ")[[1]][2])
+    info_faces = strsplit(tmp_file_sub[ii], split="\t")[[1]][6]
     index = match(tmp_file_sub[ii],tmp_file_sub_all)
     t_end = as.numeric(strsplit(strsplit(tmp_file_sub_all[index+1], split="\t")[[1]][2], split=" ")[[1]][1])
     
@@ -71,49 +119,63 @@ for (i in 1:length(input_file_names)){
       
       start_time = time-exp_start_time
       duration = t_end-time
-      target_word = info[[1]][3]
-      color = info[[1]][4]
-      mask = info[[1]][5]
-      underlining = info[[1]][6]
-      stimulus_pos_first_letter = info[[1]][7]
+      trial = info_trial
+      blocktrial = info_blocktrial
+      faces = info_faces
+      #target_word = info[[1]][3]
+      #color = info[[1]][4]
+      #mask = info[[1]][5]
+      #underlining = info[[1]][6]
+      #stimulus_pos_first_letter = info[[1]][7]
       
-      if(grepl("KEYPRESS",tmp_file_sub_all[index+2])){
-        keypress = strsplit(strsplit(strsplit(tmp_file_sub_all[index+2], split="\t")[[1]][2], split=" ")[[1]][3],split="_")[[1]][1]
-      }else{
-        keypress = "n/a"  
-      }
+      #if(grepl("KEYPRESS",tmp_file_sub_all[index+2])){
+      #  keypress = strsplit(strsplit(strsplit(tmp_file_sub_all[index+2], split="\t")[[1]][2], split=" ")[[1]][3],split="_")[[1]][1]
+      #}else{
+      #  keypress = "n/a"  
+      #}
       
     }else{
       start_time[ii] = time-exp_start_time
       duration[ii] = t_end-time
+      trial[ii] = info_trial
+      blocktrial[ii] = info_blocktrial
+      faces[ii] = info_faces
+      #target_word[ii] = info[[1]][3]
+      #color[ii] = info[[1]][4]
+      #mask[ii] = info[[1]][5]
+      #underlining[ii] = info[[1]][6]
+      #stimulus_pos_first_letter[ii] = info[[1]][7]
       
-      target_word[ii] = info[[1]][3]
-      color[ii] = info[[1]][4]
-      mask[ii] = info[[1]][5]
-      underlining[ii] = info[[1]][6]
-      stimulus_pos_first_letter[ii] = info[[1]][7]
-      
-      if(grepl("KEYPRESS",tmp_file_sub_all[index+2])){
-        keypress[ii] = strsplit(strsplit(strsplit(tmp_file_sub_all[index+2], split="\t")[[1]][2], split=" ")[[1]][3],split="_")[[1]][1]
-      }else{
-        keypress[ii] = "n/a"  
-      }
+      #if(grepl("KEYPRESS",tmp_file_sub_all[index+2])){
+      #  keypress[ii] = strsplit(strsplit(strsplit(tmp_file_sub_all[index+2], split="\t")[[1]][2], split=" ")[[1]][3],split="_")[[1]][1]
+      #}else{
+      #  keypress[ii] = "n/a"  
+      #}
     }
   }
-  event_df = data.frame(start_time,duration,target_word,color,mask,underlining,stimulus_pos_first_letter,keypress)
+  event_df = data.frame(start_time,duration,trial, blocktrial, faces)
   event_df$start_time = event_df$start_time/1000
   event_df$duration = event_df$duration/1000
-  event_df$color = as.character(event_df$color)
-  event_df$color[event_df$color=="K"]="Black"
-  event_df$color[event_df$color=="E"]="Blue"
-  event_df$mask = as.character(event_df$mask)
-  event_df$mask[event_df$mask=="DEG"]="Degraded"
-  event_df$mask[event_df$mask=="LET"]="Un-degraded"
-  event_df$underlining = as.character(event_df$underlining)
-  event_df$underlining[event_df$underlining=="U"]="Underlined"
-  event_df$underlining[event_df$underlining=="N"]="Not underlined"
+  #event_df$color = as.character(event_df$color)
+  #event_df$color[event_df$color=="K"]="Black"
+  #event_df$color[event_df$color=="E"]="Blue"
+  #event_df$mask = as.character(event_df$mask)
+  #event_df$mask[event_df$mask=="DEG"]="Degraded"
+  #event_df$mask[event_df$mask=="LET"]="Un-degraded"
+  #event_df$underlining = as.character(event_df$underlining)
+  #event_df$underlining[event_df$underlining=="U"]="Underlined"
+  #event_df$underlining[event_df$underlining=="N"]="Not underlined"
+  
+  #optionally merge with design matrix including stimulus information
+  stim_info=read.csv("./final_matrix_freeviewing_task.csv", header=TRUE)
+  event_df$faces_stim = stim_info$index
+  event_df$faces=NULL
   
   write.table(event_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_events.tsv",sep=""))
+  
+  #add exp time to the cal_df and export
+  cal_df$time_cal = (cal_df$time-exp_start_time)/1000
+  write.table(cal_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_cal.tsv",sep=""))
   
 
 }
