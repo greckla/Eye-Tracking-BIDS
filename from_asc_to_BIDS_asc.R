@@ -118,6 +118,7 @@ for (i in 1:length(input_file_names)){
       exp_start_time = time
       
       start_time = time-exp_start_time
+      time_raw = time
       duration = t_end-time
       trial = info_trial
       blocktrial = info_blocktrial
@@ -136,6 +137,7 @@ for (i in 1:length(input_file_names)){
       
     }else{
       start_time[ii] = time-exp_start_time
+      time_raw[ii] = time
       duration[ii] = t_end-time
       trial[ii] = info_trial
       blocktrial[ii] = info_blocktrial
@@ -153,7 +155,7 @@ for (i in 1:length(input_file_names)){
       #}
     }
   }
-  event_df = data.frame(start_time,duration,trial, blocktrial, faces)
+  event_df = data.frame(start_time,duration,time_raw,trial, blocktrial, faces)
   event_df$start_time = event_df$start_time/1000
   event_df$duration = event_df$duration/1000
   #event_df$color = as.character(event_df$color)

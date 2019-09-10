@@ -1,0 +1,137 @@
+---
+title: "Eye tracking data Preprocessing - Fixations - Free viewing faces"
+author: Klara Gregorova
+date: 11.09.2019
+output: html_notebook
+---
+
+```{r}
+#efix data from all participants to a dataframe
+dat_efix_all = NULL
+input_file_names = list.files("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", pattern= "*.asc$")
+input_event_names = list.files("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", pattern = "*events.tsv")
+
+
+#loop for all participants
+for (nr in 1:length(input_file_names)){
+  tmp_file = readLines(paste("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", input_file_names[nr],  sep=""))
+  code = strsplit(input_file_names[nr], split = "_task-hyperlink_eyetrack")[[1]][1]
+  vp_session = strsplit(code, split = "_")
+  vp = vp_session[[1]][1]
+  session = vp_session[[1]][2]
+  dat_fix = strsplit(tmp_file[grepl("EFIX",tmp_file)],split = "\t")
+  dat_efix = data.frame(matrix(unlist(dat_fix), nrow = length(dat_fix), byrow=T))
+  colnames(dat_efix)= c("X1", "endtime", "duration", "x", "y", "pupilsize")
+  dat_efix$X1 = as.character(dat_efix$X1)
+  dat_efix$vp = vp
+  dat_efix$session = session
+
+  # very basic preprocessing of the dataframe
+  for (i in 1:length(dat_efix$X1)){
+    dat_efix$eye[i] = strsplit(dat_efix$X1[i], split = " ")[[1]][2]
+    dat_efix$starttime[i] = strsplit(dat_efix$X1[i], split = " ")[[1]][5]}
+  dat_efix$X1=NULL
+  dat_efix$starttime=as.character(dat_efix$starttime)
+  dat_efix$duration=as.character(dat_efix$duration)
+  dat_efix$x=as.character(dat_efix$x)
+  dat_efix$y=as.character(dat_efix$y)
+  dat_efix$starttime=as.numeric(dat_efix$starttime)
+  dat_efix$duration=as.numeric(dat_efix$duration)
+  dat_efix$x=as.numeric(dat_efix$x)
+  dat_efix$y=as.numeric(dat_efix$y)
+
+  #dataset with individual event characteristics
+  dat_events=read.table(paste("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", input_event_names[nr], sep=""), header=TRUE)
+  
+  # exact task time according to eyelink messages
+  dat_efix$fix_time_start = (dat_efix$starttime - dat_events$time_raw[1])/1000
+  dat_efix$fix_time_end = dat_efix$fix_time_start + (dat_efix$duration/1000)
+
+  # assign fixations reaching to the time window of an experimental trial
+  for (i in c(1:128)){ 
+    dat_efix$trial[
+    dat_efix$fix_time_start >= dat_events$start_time[i] & dat_efix$fix_time_start <  (dat_events$start_time[i]+dat_events$duration[i]) |
+    dat_efix$fix_time_end >= dat_events$start_time[i] & dat_efix$fix_time_end< (dat_events$start_time[i]+dat_events$duration[i])
+                    ]=dat_events$trial[i]}
+
+
+  # assign the start time and the end of experimental trials
+  for (i in c(1:128)){
+    dat_efix$trial_starttime[dat_efix$trial==i] = dat_events$start_time[i]
+    dat_efix$trial_endtime[dat_efix$trial==i] = (dat_events$start_time[i] + dat_events$duration[i])
+  }
+
+  # correction of fixations durations if the fixation expands out of the time window of the experimental trial
+  for(i in 1:length(dat_efix$fix_time_start)){
+    if (!is.na(dat_efix$trial_starttime[i]) & dat_efix$fix_time_start[i]<dat_efix$trial_starttime[i]){
+        dat_efix$dur_cor[i] = dat_efix$duration[i] - 
+        ((dat_efix$trial_starttime[i]- dat_efix$fix_time_start[i])*1000)}
+    else if (!is.na(dat_efix$trial_endtime[i]) & dat_efix$fix_time_end[i]>dat_efix$trial_endtime[i]){
+        dat_efix$dur_cor[i] = dat_efix$duration[i] - 
+        ((dat_efix$fix_time_end[i] - dat_efix$trial_endtime[i])*1000)}
+    else{dat_efix$dur_cor[i]=dat_efix$duration[i]}
+    }
+
+  # assign which picture position is fixated - interval of x AND y coordinates has to be met
+  dat_efix$fix_stim=NA
+  dat_efix$fix_stim[410<=dat_efix$x & dat_efix$x<=610 & 95<=dat_efix$y & dat_efix$y<=295] = 1
+  dat_efix$fix_stim[630<=dat_efix$x & dat_efix$x<=830 & 95<=dat_efix$y & dat_efix$y<=295] = 2
+  dat_efix$fix_stim[850<=dat_efix$x & dat_efix$x<=1050 & 95<=dat_efix$y & dat_efix$y<=295] = 3
+  dat_efix$fix_stim[1070<=dat_efix$x & dat_efix$x<=1270 & 95<=dat_efix$y & dat_efix$y<=295] = 4
+  dat_efix$fix_stim[410<=dat_efix$x & dat_efix$x<=610 & 315<=dat_efix$y & dat_efix$y<=515] = 5
+  dat_efix$fix_stim[630<=dat_efix$x & dat_efix$x<=830 & 315<=dat_efix$y & dat_efix$y<=515] = 6
+  dat_efix$fix_stim[850<=dat_efix$x & dat_efix$x<=1050 & 315<=dat_efix$y & dat_efix$y<=515] = 7
+  dat_efix$fix_stim[1070<=dat_efix$x & dat_efix$x<=1270 & 315<=dat_efix$y & dat_efix$y<=515] = 8
+  dat_efix$fix_stim[410<=dat_efix$x & dat_efix$x<=610 & 535<=dat_efix$y & dat_efix$y<=735] = 9
+  dat_efix$fix_stim[630<=dat_efix$x & dat_efix$x<=830 & 535<=dat_efix$y & dat_efix$y<=735] = 10
+  dat_efix$fix_stim[850<=dat_efix$x & dat_efix$x<=1050 & 535<=dat_efix$y & dat_efix$y<=735] = 11
+  dat_efix$fix_stim[1070<=dat_efix$x & dat_efix$x<=1270 & 535<=dat_efix$y & dat_efix$y<=735] = 12
+  dat_efix$fix_stim[410<=dat_efix$x & dat_efix$x<=610 & 755<=dat_efix$y & dat_efix$y<=955] = 13
+  dat_efix$fix_stim[630<=dat_efix$x & dat_efix$x<=830 & 755<=dat_efix$y & dat_efix$y<=955] = 14
+  dat_efix$fix_stim[850<=dat_efix$x & dat_efix$x<=1050 & 755<=dat_efix$y & dat_efix$y<=955] = 15
+  dat_efix$fix_stim[1070<=dat_efix$x & dat_efix$x<=1270 & 755<=dat_efix$y & dat_efix$y<=955] = 16
+
+  # add column with simulus characteristics (for all 16 images)
+  dat_events$faces_stim=as.character(dat_events$faces_stim)
+  for (i in c(1:128)){
+    dat_efix$faces_stim[dat_efix$trial == i] = dat_events$faces_stim[dat_events$trial == i]}
+  
+dat_efix_all = rbind(dat_efix_all, dat_efix)
+  
+}
+```
+
+```{r}
+# characteristics of fixated positions (pictures)
+
+for (i in 1:length(dat_efix_all$fix_time_start)){
+  if (is.na(dat_efix_all$faces_stim[i])){
+    dat_efix_all$pic[i] = NA
+    dat_efix_all$model[i]=NA
+    dat_efix_all$sex[i]=NA
+    dat_efix_all$emotion[i]=NA}
+  else{
+    char_pics = strsplit(dat_efix_all$faces_stim[i],split = "__")
+    fix_pic = dat_efix_all$fix_stim[i]
+    dat_efix_all$pic[i] = char_pics[[1]][fix_pic]
+    char_pics_detail = strsplit(strsplit(dat_efix_all$pic[i], split = "_")[[1]][2], split = "")
+    if(length(char_pics_detail[[1]])==4){
+      dat_efix_all$model[i] = paste(char_pics_detail[[1]][1], char_pics_detail[[1]][2], sep = "")
+      dat_efix_all$sex[i] = char_pics_detail[[1]][3]
+      dat_efix_all$emotion[i] = char_pics_detail[[1]][4]
+    }
+    else{
+      dat_efix_all$model[i] = char_pics_detail[[1]][1]
+      dat_efix_all$sex[i] = char_pics_detail[[1]][2]
+      dat_efix_all$emotion[i] = char_pics_detail[[1]][3]
+    }
+  }
+}
+```
+
+```{r}
+dat_fix_cleaned = dat_efix_all[!is.na(dat_efix$trial),]
+dat_fix_cleaned$endtime = NULL
+dat_fix_cleaned$starttime = NULL
+dat_fix_cleaned$faces_stim = NULL
+```
