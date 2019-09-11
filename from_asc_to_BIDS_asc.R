@@ -7,8 +7,8 @@
 #       -> KG: script changed --> one will get an extra dataframe with all calibrations for both eyes
 #           and in the general info file, the summarized data from all calibrations are reported       
 
-input_folder = "./hyperlinks_raw_data/"
-output_folder = "./hyperlinks_raw_data_BIDS/"
+input_folder = "./freeviewfaces_raw_data/"
+output_folder = "./freeviewfaces_raw_data_BIDS/"
 
 
 input_file_names = list.files(input_folder, pattern= "*.asc$")
@@ -36,11 +36,11 @@ for (i in 1:length(input_file_names)){
   cb_cd(indi_folder_path)
   
   file.copy(paste(input_folder,input_file_names[i],sep="")
-            , paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.asc",sep="")
+            , paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_eyetrack.asc",sep="")
             )
   
   #get cal info
-  tmp_file = readLines(paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.asc",sep=""))
+  tmp_file = readLines(paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_eyetrack.asc",sep=""))
   tmp_file_cal = strsplit(tmp_file[grepl("!CAL VALIDATION",tmp_file)&!grepl("ABORTED", tmp_file)],split = " ")
   
   #possibly you need to specify the correct value as the order of variables can variate
@@ -151,11 +151,11 @@ for (i in 1:length(input_file_names)){
   event_df$faces_stim = stim_info$index
   event_df$faces=NULL
   
-  write.table(event_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_events.tsv",sep=""))
+  write.table(event_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_events.tsv",sep=""))
   
   #add exp time to the cal_df and export
   cal_df$time_cal = (cal_df$time-exp_start_time)/1000
-  write.table(cal_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_cal.tsv",sep=""))
+  write.table(cal_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_cal.tsv",sep=""))
   
   #export file with general characteristics
   cal_exp = which(cal_df$time_cal > 0)[1] - 2
@@ -182,7 +182,7 @@ for (i in 1:length(input_file_names)){
               ,'"Calibration type": "',calibration,'",\n\t"Recorded eye": "',eye,'",\n\t"Maximal calibration error (accross all calibrations excluding training)": ',max(cal_df$error_max[cal_exp:nrow(cal_df)])
               ,',\n\t"Average calibration error (mean accross all calibrations excluding training)": ', mean(cal_df$error_avg[cal_exp:nrow(cal_df)])
               ,"\n}",sep = "")
-              , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.json",sep=""))
+              , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_eyetrack.json",sep=""))
 }
 
 

@@ -13,10 +13,10 @@ input_file_pathways = NULL
 input_event_path = NULL
 input_event_pathways = NULL
 
-subjects = list.files("./hyperlinks_raw_data_BIDS/")
+subjects = list.files("./freeviewfaces_raw_data_BIDS/")
 
 for (sub in subjects){
-  pathway = paste("./hyperlinks_raw_data_BIDS/",sub,"/eyetrack/", sep = "")
+  pathway = paste("./freeviewfaces_raw_data_BIDS/",sub,"/eyetrack/", sep = "")
   input_file_names = list.files(pathway, pattern= "*.asc$")
   input_path_sub = NULL
   for (i in 1:length(input_file_names)){
@@ -43,7 +43,7 @@ for (sub in subjects){
 for (nr in 1:length(input_file_pathways)){
   tmp_file = readLines(input_file_pathways[nr])
   file = strsplit(input_file_pathways[nr], split = "eyetrack/")[[1]][2]
-  code = strsplit(file, split = "_task-hyperlink_eyetrack")[[1]][1]
+  code = strsplit(file, split = "_task-freeviewfaces_eyetrack")[[1]][1]
   vp_session = strsplit(code, split = "_")
   vp = vp_session[[1]][1]
   session = vp_session[[1]][2]
@@ -93,12 +93,20 @@ for (nr in 1:length(input_file_pathways)){
   for(i in 1:length(dat_efix$fix_time_start)){
     if (!is.na(dat_efix$trial_starttime[i]) & dat_efix$fix_time_start[i]<dat_efix$trial_starttime[i]){
         dat_efix$dur_cor[i] = dat_efix$duration[i] - 
-        ((dat_efix$trial_starttime[i]- dat_efix$fix_time_start[i])*1000)}
+        ((dat_efix$trial_starttime[i]- dat_efix$fix_time_start[i])*1000)
+        dat_efix$type_fixation[i] = "before"
+        }
     else if (!is.na(dat_efix$trial_endtime[i]) & dat_efix$fix_time_end[i]>dat_efix$trial_endtime[i]){
         dat_efix$dur_cor[i] = dat_efix$duration[i] - 
-        ((dat_efix$fix_time_end[i] - dat_efix$trial_endtime[i])*1000)}
-    else{dat_efix$dur_cor[i]=dat_efix$duration[i]}
-    }
+        ((dat_efix$fix_time_end[i] - dat_efix$trial_endtime[i])*1000)
+        dat_efix$type_fixation[i] = "after"
+        }
+    else{
+      dat_efix$dur_cor[i]=dat_efix$duration[i]
+      dat_efix$type_fixation[i]=NA}
+  }
+  
+  dat_efix$type_fixation[is.na(dat_efix$type_fixation) & !is.na(dat_efix$trial)]="complete"
 
   # assign which picture position is fixated - interval of x AND y coordinates has to be met
   dat_efix$fix_stim=NA
