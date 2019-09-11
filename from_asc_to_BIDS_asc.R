@@ -41,7 +41,7 @@ for (i in 1:length(input_file_names)){
   
   #get cal info
   tmp_file = readLines(paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.asc",sep=""))
-  tmp_file_cal = strsplit(tmp_file[grepl("!CAL VALIDATION",tmp_file)],split = " ")
+  tmp_file_cal = strsplit(tmp_file[grepl("!CAL VALIDATION",tmp_file)&!grepl("ABORTED", tmp_file)],split = " ")
   
   #possibly you need to specify the correct value as the order of variables can variate
   for (cal_nr in 1:length(tmp_file_cal)){
@@ -75,28 +75,6 @@ for (i in 1:length(input_file_names)){
   cal_df$error_max=as.numeric(as.character(cal_df$error_max))
   cal_df$error_avg=as.numeric(as.character(cal_df$error_avg))
  
-  for(nr in 1:nlevels(cal_df$calibration)){
-   if(nr==1){
-     cal_tmp=levels(cal_df$calibration)[nr]
-     calibration=cal_tmp}
-   else{cal_tmp=levels(cal_df$calibration)[nr]
-   calibration=paste(calibration,cal_tmp, sep=", ")}}
- 
-  for(nr in 1:nlevels(cal_df$eye)){
-   if(nr==1){
-     eye_tmp=levels(cal_df$eye)[nr]
-     eye=eye_tmp}
-   else{eye_tmp=levels(cal_df$eye)[nr]
-   eye=paste(eye,eye_tmp, sep=", ")}}
-  
-  write(paste('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t"StartMessage": "FACESTART",\n\t"EndMessage": "ENDPRESENTATION",\n\t"EventIdentifier": "EFIX",\n\t'
-              ,'"Manifacturer": "SR-Research",\n\t"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",\n\t"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B Mod:2019.07.10 14:33 MESZ",\n\t'
-              ,'"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",\n\t"Instructions":"Natural viewing of matrices, no special task",\n\t'
-              ,'"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",\n\t"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",\n\t'
-              ,'"Calibration type": "',calibration,'",\n\t"Recorded eye": "',eye,'",\n\t"Maximal calibration error (accross all calibrations)": ',max(cal_df$error_max),',\n\t"Average calibration error (mean accross all calibrations)": ',mean(cal_df$error_avg)
-              ,"\n}",sep = "")
-        , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.json",sep=""))
-  
   
   #get stim info for events file
   tmp_file_sub_all = tmp_file[grepl("FACESTART|ENDPRESENTATION",tmp_file)]
@@ -179,7 +157,32 @@ for (i in 1:length(input_file_names)){
   cal_df$time_cal = (cal_df$time-exp_start_time)/1000
   write.table(cal_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_cal.tsv",sep=""))
   
-
+  #export file with general characteristics
+  cal_exp = which(cal_df$time_cal > 0)[1] - 2
+ 
+  
+  for(nr in 1:nlevels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))){
+    if(nr==1){
+      cal_tmp=levels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))[nr]
+      calibration=cal_tmp}
+    else{cal_tmp=levels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))[nr]
+    calibration=paste(calibration,cal_tmp, sep=", ")}}
+  
+  for(nr in 1:nlevels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))){
+    if(nr==1){
+      eye_tmp=levels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))[nr]
+      eye=eye_tmp}
+    else{eye_tmp=levels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))[nr]
+    eye=paste(eye,eye_tmp, sep=", ")}}
+  
+  write(paste('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t"StartMessage": "FACESTART",\n\t"EndMessage": "ENDPRESENTATION",\n\t"EventIdentifier": "EFIX",\n\t'
+              ,'"Manifacturer": "SR-Research",\n\t"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",\n\t"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B Mod:2019.07.10 14:33 MESZ",\n\t'
+              ,'"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",\n\t"Instructions":"Natural viewing of matrices, no special task",\n\t'
+              ,'"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",\n\t"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",\n\t'
+              ,'"Calibration type": "',calibration,'",\n\t"Recorded eye": "',eye,'",\n\t"Maximal calibration error (accross all calibrations excluding training)": ',max(cal_df$error_max[cal_exp:nrow(cal_df)])
+              ,',\n\t"Average calibration error (mean accross all calibrations excluding training)": ', mean(cal_df$error_avg[cal_exp:nrow(cal_df)])
+              ,"\n}",sep = "")
+              , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-hyperlink_eyetrack.json",sep=""))
 }
 
 

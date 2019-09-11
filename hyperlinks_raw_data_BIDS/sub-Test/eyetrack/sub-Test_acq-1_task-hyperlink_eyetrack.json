@@ -10,8 +10,8 @@
 	"Instructions":"Natural viewing of matrices, no special task",
 	"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",
 	"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",
-	"Calibration type": "HV13, HV9",
+	"Calibration type": "HV13",
 	"Recorded eye": "LEFT, RIGHT",
-	"Maximal calibration error (accross all calibrations)": 0.97,
-	"Average calibration error (mean accross all calibrations)": 0.303
+	"Maximal calibration error (accross all calibrations excluding training)": 0.97,
+	"Average calibration error (mean accross all calibrations excluding training)": 0.30875
 }
