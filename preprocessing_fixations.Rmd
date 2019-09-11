@@ -8,14 +8,42 @@ output: html_notebook
 ```{r}
 #efix data from all participants to a dataframe
 dat_efix_all = NULL
-input_file_names = list.files("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", pattern= "*.asc$")
-input_event_names = list.files("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", pattern = "*events.tsv")
+input_file_path = NULL
+input_file_pathways = NULL
+input_event_path = NULL
+input_event_pathways = NULL
+
+subjects = list.files("./hyperlinks_raw_data_BIDS/")
+
+for (sub in subjects){
+  pathway = paste("./hyperlinks_raw_data_BIDS/",sub,"/eyetrack/", sep = "")
+  input_file_names = list.files(pathway, pattern= "*.asc$")
+  input_path_sub = NULL
+  for (i in 1:length(input_file_names)){
+    input_path_tmp = paste(pathway, input_file_names[i], sep = "")
+    input_path_sub = c(input_path_sub, input_path_tmp)
+  }
+  input_file_pathways = c(input_file_pathways,input_path_sub) 
 
 
+  input_event_names = list.files(pathway, pattern = "*events.tsv")
+  input_event_sub = NULL
+  for (i in 1:length(input_event_names)){
+    input_event_tmp=paste(pathway, input_event_names[i], sep = "")
+    input_event_sub = c(input_event_sub, input_event_tmp)
+  }
+  input_event_pathways = c(input_event_pathways, input_event_sub)
+
+}
+```
+
+```{r}
 #loop for all participants
-for (nr in 1:length(input_file_names)){
-  tmp_file = readLines(paste("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", input_file_names[nr],  sep=""))
-  code = strsplit(input_file_names[nr], split = "_task-hyperlink_eyetrack")[[1]][1]
+
+for (nr in 1:length(input_file_pathways)){
+  tmp_file = readLines(input_file_pathways[nr])
+  file = strsplit(input_file_pathways[nr], split = "eyetrack/")[[1]][2]
+  code = strsplit(file, split = "_task-hyperlink_eyetrack")[[1]][1]
   vp_session = strsplit(code, split = "_")
   vp = vp_session[[1]][1]
   session = vp_session[[1]][2]
@@ -41,7 +69,7 @@ for (nr in 1:length(input_file_names)){
   dat_efix$y=as.numeric(dat_efix$y)
 
   #dataset with individual event characteristics
-  dat_events=read.table(paste("./hyperlinks_raw_data_BIDS/sub-Test/eyetrack/", input_event_names[nr], sep=""), header=TRUE)
+  dat_events=read.table(input_event_pathways[nr], header=TRUE)
   
   # exact task time according to eyelink messages
   dat_efix$fix_time_start = (dat_efix$starttime - dat_events$time_raw[1])/1000
