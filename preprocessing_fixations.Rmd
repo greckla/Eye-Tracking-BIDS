@@ -55,18 +55,18 @@ for (nr in 1:length(input_file_pathways)){
   dat_efix$session = session
 
   # very basic preprocessing of the dataframe
-  for (i in 1:length(dat_efix$X1)){
+  for (i in 1:length(dat_efix$vp)){
     dat_efix$eye[i] = strsplit(dat_efix$X1[i], split = " ")[[1]][2]
     dat_efix$starttime[i] = strsplit(dat_efix$X1[i], split = " ")[[1]][5]}
-  dat_efix$X1=NULL
-  dat_efix$starttime=as.character(dat_efix$starttime)
-  dat_efix$duration=as.character(dat_efix$duration)
-  dat_efix$x=as.character(dat_efix$x)
-  dat_efix$y=as.character(dat_efix$y)
-  dat_efix$starttime=as.numeric(dat_efix$starttime)
-  dat_efix$duration=as.numeric(dat_efix$duration)
-  dat_efix$x=as.numeric(dat_efix$x)
-  dat_efix$y=as.numeric(dat_efix$y)
+    #dat_efix$X1=NULL
+    dat_efix$starttime=as.character(dat_efix$starttime)
+    dat_efix$duration=as.character(dat_efix$duration)
+    dat_efix$x=as.character(dat_efix$x)
+    dat_efix$y=as.character(dat_efix$y)
+    dat_efix$starttime=as.numeric(dat_efix$starttime)
+    dat_efix$duration=as.numeric(dat_efix$duration)
+    dat_efix$x=as.numeric(dat_efix$x)
+    dat_efix$y=as.numeric(dat_efix$y)
 
   #dataset with individual event characteristics
   dat_events=read.table(input_event_pathways[nr], header=TRUE)
@@ -77,10 +77,7 @@ for (nr in 1:length(input_file_pathways)){
 
   # assign fixations reaching to the time window of an experimental trial
   for (i in c(1:128)){ 
-    dat_efix$trial[
-    dat_efix$fix_time_start >= dat_events$start_time[i] & dat_efix$fix_time_start <  (dat_events$start_time[i]+dat_events$duration[i]) |
-    dat_efix$fix_time_end >= dat_events$start_time[i] & dat_efix$fix_time_end< (dat_events$start_time[i]+dat_events$duration[i])
-                    ]=dat_events$trial[i]}
+    dat_efix$trial[dat_efix$fix_time_start >= dat_events$start_time[i] & dat_efix$fix_time_start <  (dat_events$start_time[i]+dat_events$duration[i]) |dat_efix$fix_time_end >= dat_events$start_time[i] & dat_efix$fix_time_end<(dat_events$start_time[i]+dat_events$duration[i])] =dat_events$trial[i]}
 
 
   # assign the start time and the end of experimental trials
@@ -170,4 +167,18 @@ dat_fix_cleaned = dat_efix_all[!is.na(dat_efix$trial),]
 dat_fix_cleaned$endtime = NULL
 dat_fix_cleaned$starttime = NULL
 dat_fix_cleaned$faces_stim = NULL
+dat_fix_cleaned$X1 = NULL
+dat_fix_cleaned$pupilsize = NULL
+dat_fix_cleaned$session = as.factor(dat_fix_cleaned$session)
+dat_fix_cleaned$eye = as.factor(dat_fix_cleaned$eye)
+summary(dat_fix_cleaned)
 ```
+
+```{r}
+hist(dat_fix_cleaned$dur_cor,breaks=1000)
+
+tapply(dat_fix_cleaned$dur_cor,dat_fix_cleaned$eye,summary)
+tapply(dat_fix_cleaned$dur_cor,dat_fix_cleaned$emotion,summary)
+tapply(dat_fix_cleaned$dur_cor,dat_fix_cleaned$sex,summary)
+```
+
