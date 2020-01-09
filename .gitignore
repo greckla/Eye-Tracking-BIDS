@@ -4,3 +4,4 @@
 *.Ruserdata
 *.knit.md
 .Rproj.user
+*backup.*
