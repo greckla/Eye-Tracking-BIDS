@@ -7,14 +7,18 @@ output:
   pdf_document: default
   html_notebook: default
 ---
+to do
+- participants.tsv
 
 ```{r}
 # set path for input and output folders
 # note, you need a folder freeviesfaces_raw_data where there are the raw .asc files 
 # saved and a folder freeviewfaces_raw_data_structure which is empty at the beginning
+readout_file = read.table("./readout_file.txt", header = TRUE, 
+                          colClasses = "character", sep = ":", quote = "")
 
-input_folder = "./freeviewfaces_raw_data/"
-output_folder = "./freeviewfaces_raw_data_BIDS/"
+input_folder = paste0("./",readout_file[1,2],"_raw_data/")
+output_folder = paste0("./",readout_file[1,2],"_raw_data_BIDS/") 
 
 # list all .asc files in the input folder with raw data
 input_file_names = list.files(input_folder, pattern= "*.asc$")
@@ -29,6 +33,8 @@ cb_cd = function(path){
   }
 }
 
+participant_id = NULL
+
 # loop over all asc files in raw data
 for (i in 1:length(input_file_names)){
   
@@ -36,7 +42,12 @@ for (i in 1:length(input_file_names)){
   id = strsplit(input_file_names[i],split=".asc")[[1]] [1]
   vp = strsplit(id,split="_")[[1]] [1]
   aq = strsplit(id,split="_")[[1]] [2]
-
+  
+  #create a vector of participants for participants.tsv file
+  sub = vp
+  if(sub%in%participant_id){
+  }else{participant_id = c(participant_id, sub)}
+  
   # paste the path for subfolder /eyetrack and create directory with cb_cd function
   indi_folder_path = paste(output_folder,"sub-",vp,"/eyetrack",sep="")
   cb_cd(indi_folder_path)
@@ -45,11 +56,11 @@ for (i in 1:length(input_file_names)){
   # paste the file names containing the subject code (vp) and the session (acq)
   file.copy(paste(input_folder,input_file_names[i],sep="")
             , paste(indi_folder_path,"/sub-",vp,"_acq-",aq,
-                    "_task-freeviewfaces_eyetrack.asc",sep="")
+                    "_task-",readout_file[1,2],"_eyetrack.asc",sep="")
             )
   # read the .asc file from the output folder
   tmp_file = readLines(paste(indi_folder_path,"/sub-",vp,"_acq-",aq,
-                             "_task-freeviewfaces_eyetrack.asc",sep=""))
+                             "_task-",readout_file[1,2],"_eyetrack.asc",sep=""))
   
   # get cal info - 
   # grap all rows with message !CAL VALIDATION, excluded aborted validation 
@@ -96,17 +107,13 @@ for (i in 1:length(input_file_names)){
   # cell type to numeric for max. and avg. calibration error
   cal_df$error_max=as.numeric(as.character(cal_df$error_max))
   cal_df$error_avg=as.numeric(as.character(cal_df$error_avg))
- 
-  # extract the information about sampling frequency
-  sampl_freq = round(as.numeric(strsplit(tmp_file[grepl(
-    "SAMPLES\tGAZE\tLEFT\tRIGHT\tRATE",tmp_file)],split = "\t")[[1]][6],0))
   
   # get stim info for events file 
   # note, messages for trials were set only in the experimental blocks, not in the practicing part
   
   # two subsets: (i) with start & and end of each trial (ii) with the start only
-  tmp_file_sub_all = tmp_file[grepl("FACESTART|ENDPRESENTATION",tmp_file)]
-  tmp_file_sub = tmp_file_sub_all[grepl("FACESTART",tmp_file_sub_all)]
+  tmp_file_sub_all = tmp_file[grepl(paste0(readout_file[2,2],"|",readout_file[3,2]),tmp_file)]
+  tmp_file_sub = tmp_file_sub_all[grepl(readout_file[2,2],tmp_file_sub_all)]
   
   # loop over trials (messages for trial start)
   for (ii in 1:length(tmp_file_sub)){
@@ -114,6 +121,7 @@ for (i in 1:length(input_file_names)){
     # extract information from the starting message
     time = as.numeric(strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][2], 
                               split=" ")[[1]][1]) # time
+    ################ OPTIONAL ###############
     info_trial = as.numeric(strsplit(strsplit(tmp_file_sub[ii], split="\t")[[1]][4],
                               split=" ")[[1]][2]) # counter for the number of the trial
     # conter for the number of the trial within the block
@@ -121,8 +129,10 @@ for (i in 1:length(input_file_names)){
       strsplit(tmp_file_sub[ii], split="\t")[[1]][3], split=" ")[[1]][2]) 
     # info about the faces shown in the matrix
     info_faces = strsplit(tmp_file_sub[ii], split="\t")[[1]][6] 
+    ##########################################
+    
     # row index for on which position we can find the starting message 
-    # in the bigger subset including also the ending messages)
+    # in the bigger subset including also the ending messages
     index = match(tmp_file_sub[ii],tmp_file_sub_all)  
     # extract the end time of the trial
     t_end = as.numeric(strsplit(
@@ -137,25 +147,32 @@ for (i in 1:length(input_file_names)){
       start_time = time-exp_start_time # start time relative to the experimental start time
       time_raw = time # raw start time
       duration = t_end-time # fixation duration as a difference between the end and the start time
+      ################ OPTIONAL ###############
       trial = info_trial # number of the trial
       blocktrial = info_blocktrial # number of the trial within the block
       faces = info_faces # info about the presented faces
-      
+      #########################################
     }else{
       start_time[ii] = time-exp_start_time # start time relative to the experimental start time
       time_raw[ii] = time
       duration[ii] = t_end-time
+      ################ OPTIONAL ###############
       trial[ii] = info_trial
       blocktrial[ii] = info_blocktrial
       faces[ii] = info_faces
+      #########################################
     }
   }
   
   #create a dataframe out of the event information
-  event_df = data.frame(start_time,duration,time_raw,trial, blocktrial, faces)
+  ######## ADJUST COLUMNS WITH CHARACTERISTICS #########
+  event_df = data.frame(start_time,duration,time_raw,trial, blocktrial, faces) 
+  ######################################################
+  
   event_df$start_time = event_df$start_time/1000 # transform from ms to s
   event_df$duration = event_df$duration/1000 # transform from ms to s
 
+  ################ OPTIONAL ###############
   stim_info=read.csv("./stimuli_matrices.csv", header=TRUE) 
         # import matrix with full information about the presented faces
   # put the information about the faces into the event dataframe
@@ -163,18 +180,16 @@ for (i in 1:length(input_file_names)){
   # delete the column with the incomplete information about the faces which 
   # were replaced by the information from the stim_info dataframe
   event_df$faces=NULL 
- 
+  #########################################
+  
   # write the event dataframe 
   write.table(event_df,row.names = F, file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,
-                                                   "_task-freeviewfaces_events.tsv",sep=""))  
+                                                   "_task-",readout_file[1,2],"_events.tsv",sep=""))  
+  
+  # export .json file with general characteristics
   
   # add exp time (relative to the starting point of the first trial) to the cal_df and export
   cal_df$time_cal = (cal_df$time-exp_start_time)/1000
-  # write the dataframe with the calibration data
-  write.table(cal_df,row.names = F, file = paste(
-    indi_folder_path,"/sub-",vp,"_acq-",aq,"_task-freeviewfaces_cal.tsv",sep=""))
-  
-  # export .json file with general characteristics
   
   # detect the calibration before the first experimental block (2 rows before the first
   # calibration with positive experimental time - after the start of the experiment)
@@ -188,40 +203,104 @@ for (i in 1:length(input_file_names)){
     else{cal_tmp=levels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))[nr]
     calibration=paste(calibration,cal_tmp, sep=", ")}}
   
-  # vector with tracked eye
-  for(nr in 1:nlevels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))){
-    if(nr==1){
-      eye_tmp=levels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))[nr]
-      eye=eye_tmp}
-    else{eye_tmp=levels(factor(cal_df$eye[cal_exp:nrow(cal_df)]))[nr]
-    eye=paste(eye,eye_tmp, sep=", ")}}
+  cal_df$calibration = as.character(cal_df$calibration)
+  cal_df$eye = as.character(cal_df$eye)
+  
+  # summarize the tracked eyes tracked eye
+  generals_temp = strsplit(tmp_file[grepl("SAMPLES\tGAZE",tmp_file)],split = "\t")
+  for (g_nr in 1:length(generals_temp)){max_l = max(length(generals_temp[[g_nr]]))}
+  general_file = NULL
+  for (g_nr in 1:length(generals_temp)){
+    g_vec = NULL  
+    for(i in 1:max_l){g_vec[i]=generals_temp[[g_nr]][i]}
+    general_file = data.frame(rbind(general_file, g_vec))
+  }
+  
+  if(any(general_file=="RIGHT") & !any(general_file=="LEFT")){eye = "RIGHT"
+  }else if(any(general_file=="LEFT") & !any(general_file=="RIGHT")){eye = "LEFT"
+  }else if(any(general_file=="RIGHT") & any(general_file=="LEFT")){eye = "BOTH"}
+  
+  if(any(general_file[1,]=="RIGHT")&any(general_file[1,]=="LEFT")){position_nr = 6
+  }else{position_nr = 5}
+  
+  # extract the information about sampling frequency
+  sampl_freq = round(as.numeric(strsplit(tmp_file[grepl(
+    "SAMPLES\tGAZE",tmp_file)],split = "\t")[[1]][position_nr],0))
+  
+  # list of lists with calibration information for the .json file
+  for(i in 1:length(colnames(cal_df))){
+    if(i == 1){colnames_cal = paste0("[",colnames(cal_df)[i])}
+    else(colnames_cal = paste0(colnames_cal,",",colnames(cal_df)[i]))}
+  colnames_cal = paste0(colnames_cal,"]")
+
+  cal_list = NULL
+  for(row in 1:nrow(cal_df)){
+    cal_df_tmp = cal_df[row,]
+    for(i in 1:ncol(cal_df_tmp)){
+      if(i == 1){row_cal = paste0(",\n[",cal_df_tmp[1])}
+      else{row_cal = paste0(row_cal,",",cal_df_tmp[i])}}
+    row_cal = paste0(row_cal,"]")
+  cal_list = paste0(cal_list,row_cal)
+  }
+  cal_list = paste0("\n[\n",colnames_cal, cal_list, "\n]")
+    
+  ######################################################################
+  
   # write .json file with all important general information
   write(paste('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t'
-              ,'"StartMessage": "FACESTART",\n\t"EndMessage": "ENDPRESENTATION",\n\t'
-              ,'"EventIdentifier": "EFIX",\n\t'
-              ,'"Manifacturer": "SR-Research",\n\t"ManufacturersModelName": '
-              ,'"EYELINK II CL v4.56 Aug 18 2010",\n\t'
-              ,'"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B '
-              ,'Mod:2019.07.10 14:33 MESZ",\n\t'
-              ,'"TaskDescription": "Free viewing of a 4x4 matrices including faces with'
-              ,' positive, negative and neutral emotional expression",\n\t'
-              ,'"Instructions":"Natural viewing of matrices, no special task",\n\t'
-              ,'"InstitutionName": "Goethe-University of Frankfurt; '
-              ,'Department of Psychology",\n\t'
-              ,'"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 '
-              ,'Frankfurt am Main; Germany",\n\t'
+              ,'"FileFormat": "*.asc",\n\t'
+              ,'"StartMessage": "',readout_file[2,2],'",\n\t'
+              ,'"EndMessage": "',readout_file[3,2],'",\n\t'
+              ,'"EventIdentifier": "',readout_file[4,2],'",\n\t'
+              ,'"PupilPositionType": "',readout_file[5,2],'",\n\t'
+              ,'"RawSamples": "',readout_file[6,2],'",\n\t'
+              ,'"IncludedEvents": ',readout_file[7,2],',\n\t'
+              ,'"DetectionAlgorithm": "',readout_file[8,2],'",\n\t'
+              ,'"InstitutionName": "',readout_file[9,2],'",\n\t'
+              ,'"InstitutionAdress": "',readout_file[10,2],'",\n\t'
+              ,'"Manufacturer": "',readout_file[11,2],'",\n\t'
+              ,'"ManufacturersModelName": "',readout_file[12,2],'",\n\t'
+              ,'"SoftwareVersion": "',readout_file[13,2],'",\n\t'
+              ,'"TaskDescription": "',readout_file[14,2],'",\n\t'
+              ,'"Instructions": "',readout_file[15,2],'",\n\t'
               ,'"Calibration type": "',calibration,'",\n\t'
-              ,'"Recorded eye": "',eye,'",\n\t'
-              ,'"Maximal calibration error (accross all calibrations excluding training)":'
+              ,'"CalibrationPosition": "',readout_file[16,2],'",\n\t'
+              ,'"CalibrationDistance": "',readout_file[17,2],'",\n\t'
+              ,'"RecordedEye": "',eye,'",\n\t'
+              ,'"MaximalCalibrationError":'
               ,' ',max(cal_df$error_max[cal_exp:nrow(cal_df)]),',\n\t'
-              ,'"Average calibration error '
-              ,'(mean accross all calibrations excluding training)":'
-              ,' ', mean(cal_df$error_avg[cal_exp:nrow(cal_df)]),"\n}",sep = "")
+              ,'"AverageCalibrationError":'
+              ,' ',mean(cal_df$error_avg[cal_exp:nrow(cal_df)]),',\n\t'
+              ,'"CalibrationList":}\n'
+              ,cal_list,sep = "")
               , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,
-                             "_task-freeviewfaces_eyetrack.json",sep="")) 
+                             "_task-",readout_file[1,2],"_eyetrack.json",sep="")) 
 
 }
+
+write(paste('{\n\t"Name": "',readout_file[18,2],'",\n\t'
+            ,'"BIDSVersion": "1.0",\n\t'
+            ,'"License": "',readout_file[19,2],'",\n\t'
+            ,'"Authors": ',readout_file[20,2],',\n\t'
+            ,'"Aknowledgements": "',readout_file[21,2],'",\n\t'
+            ,'"Funding": "',readout_file[22,2],'",\n\t'
+            ,'"ReferenceAndLinks": "',readout_file[23,2],'",\n\t'
+            ,'"DatasetDOI": "',readout_file[24,2],'"\n}',sep = "")
+            ,file = paste(output_folder,
+                             "task-",readout_file[1,2],"_dataset_description.json",sep=""))
+
+
+participant_df = data.frame(participant_id = participant_id)
+########OPTIONAL ADD FURTHER USEFULL INFORMATION ABOUT THE PARTICIPANTS###############
+
+######################################################################################
+
+write.table(participant_df,row.names = F, file = paste(output_folder,
+                                                   "task-",readout_file[1,2],"_participant.tsv",sep=""))
+
 ```
+
+
 
 
 

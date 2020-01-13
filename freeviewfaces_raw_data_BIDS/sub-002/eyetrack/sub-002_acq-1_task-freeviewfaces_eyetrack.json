@@ -1,17 +1,38 @@
 {
 	"SamplingFrequency": 1000,
+	"FileFormat": "*.asc",
 	"StartMessage": "FACESTART",
 	"EndMessage": "ENDPRESENTATION",
 	"EventIdentifier": "EFIX",
-	"Manifacturer": "SR-Research",
-	"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",
-	"SoftwareVersions": "SREB2.2.61 WIN32 LID:5F0D424B Mod:2019.07.10 14:33 MESZ",
-	"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",
-	"Instructions":"Natural viewing of matrices, no special task",
+	"PupilPositionType": "raw pupil position on screen",
+	"RawSamples": "recorded",
+	"IncludedEvents": [[Start of fixation, "SFIX"],[End of fixation, "EFIX"],[Start of saccade, "SSACC"], [End of saccade, "ESACC"],[Start of blink, "SBLINK"], [End of blink, "EBLINK"]],
+	"DetectionAlgorithm": "SR-Research",
 	"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",
-	"InstitutionAddress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",
+	"InstitutionAdress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",
+	"Manufacturer": "SR-Research",
+	"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",
+	"SoftwareVersion": "SREB2.2.61 WIN32 LID.5F0D424B Mod.2019.07.10 14.33 MESZ",
+	"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",
+	"Instructions": "Natural viewing of matrices, no special task",
 	"Calibration type": "HV13",
-	"Recorded eye": "LEFT, RIGHT",
-	"Maximal calibration error (accross all calibrations excluding training)": 0.97,
-	"Average calibration error (mean accross all calibrations excluding training)": 0.30875
-}
+	"CalibrationPosition": "",
+	"CalibrationDistance": "60cm",
+	"RecordedEye": "BOTH",
+	"MaximalCalibrationError": 0.97,
+	"AverageCalibrationError": 0.30875,
+	"CalibrationList":}
+
+[
+[calibration,eye,error_max,error_avg,time_cal],
+[HV9,LEFT,0.65,0.28,-137.922],
+[HV9,RIGHT,0.68,0.28,-137.922],
+[HV13,LEFT,0.68,0.26,-28.586],
+[HV13,RIGHT,0.85,0.37,-28.586],
+[HV13,LEFT,0.6,0.18,405.362],
+[HV13,RIGHT,0.74,0.27,405.362],
+[HV13,LEFT,0.74,0.41,803.454],
+[HV13,RIGHT,0.74,0.29,803.454],
+[HV13,LEFT,0.93,0.41,1182.632],
+[HV13,RIGHT,0.97,0.28,1182.632]
+]
