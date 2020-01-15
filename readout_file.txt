@@ -16,7 +16,7 @@ TaskDescription:Free viewing of a 4x4 matrices including faces with positive, ne
 Instructions:Natural viewing of matrices, no special task
 CalibrationPosition:
 CalibrationDistance:60cm
-Name:Reliability of eye-tracking measures from the free viewing of emotional face photographs
+Name:Emotional Faces Dataset
 License:CC-BY 4.0 International license
 Authors:["Ulrike Basten", "Rebecca Mayer", "Klara Gregorova", "Benjamin Gagl"]
 Aknowledgements:

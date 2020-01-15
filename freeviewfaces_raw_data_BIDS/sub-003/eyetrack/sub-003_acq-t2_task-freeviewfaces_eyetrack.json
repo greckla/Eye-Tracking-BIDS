@@ -1,0 +1,34 @@
+{
+	"SamplingFrequency": 1000,
+	"FileFormat": "*.asc",
+	"StartMessage": "FACESTART",
+	"EndMessage": "ENDPRESENTATION",
+	"EventIdentifier": "EFIX",
+	"PupilPositionType": "raw pupil position on screen",
+	"RawSamples": "recorded",
+	"IncludedEvents": [["Start of fixation", "SFIX"],["End of fixation", "EFIX"],["Start of saccade", "SSACC"], ["End of saccade", "ESACC"],["Start of blink", "SBLINK"], ["End of blink", "EBLINK"]],
+	"DetectionAlgorithm": "SR-Research",
+	"InstitutionName": "Goethe-University of Frankfurt; Department of Psychology",
+	"InstitutionAdress": "Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany",
+	"Manufacturer": "SR-Research",
+	"ManufacturersModelName": "EYELINK II CL v4.56 Aug 18 2010",
+	"SoftwareVersion": "SREB2.2.61 WIN32 LID.5F0D424B Mod.2019.07.10 14.33 MESZ",
+	"TaskDescription": "Free viewing of a 4x4 matrices including faces with positive, negative and neutral emotional expression",
+	"Instructions": "Natural viewing of matrices, no special task",
+	"CalibrationPosition": "",
+	"CalibrationDistance": "60cm",
+	"RecordedEye": "BOTH",
+	"CalibrationList":
+[
+["HV9","LEFT",0.5,0.3,-134.408],
+["HV9","RIGHT",0.53,0.31,-134.408],
+["HV13","LEFT",0.71,0.34,-25.841],
+["HV13","RIGHT",0.7,0.37,-25.841],
+["HV13","LEFT",0.69,0.37,370.184],
+["HV13","RIGHT",0.86,0.48,370.184],
+["HV13","LEFT",0.9,0.33,754.047],
+["HV13","RIGHT",0.71,0.3,754.047],
+["HV13","LEFT",0.73,0.41,1150.691],
+["HV13","RIGHT",0.72,0.37,1150.691]
+]
+}

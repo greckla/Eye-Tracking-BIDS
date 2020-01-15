@@ -7,8 +7,6 @@ output:
   pdf_document: default
   html_notebook: default
 ---
-to do
-- participants.tsv
 
 ```{r}
 # set path for input and output folders
@@ -176,7 +174,7 @@ for (i in 1:length(input_file_names)){
   stim_info=read.csv("./stimuli_matrices.csv", header=TRUE) 
         # import matrix with full information about the presented faces
   # put the information about the faces into the event dataframe
-  event_df$faces_stim = stim_info$index
+  event_df$faces_stim = stim_info$index[1:length(event_df$faces)]
   # delete the column with the incomplete information about the faces which 
   # were replaced by the information from the stim_info dataframe
   event_df$faces=NULL 
@@ -190,21 +188,6 @@ for (i in 1:length(input_file_names)){
   
   # add exp time (relative to the starting point of the first trial) to the cal_df and export
   cal_df$time_cal = (cal_df$time-exp_start_time)/1000
-  
-  # detect the calibration before the first experimental block (2 rows before the first
-  # calibration with positive experimental time - after the start of the experiment)
-  cal_exp = which(cal_df$time_cal > 0)[1] - 2
- 
-  # vector with all calibration types within the experiment
-  for(nr in 1:nlevels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))){
-    if(nr==1){
-      cal_tmp=levels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))[nr]
-      calibration=cal_tmp}
-    else{cal_tmp=levels(factor(cal_df$calibration[cal_exp:nrow(cal_df)]))[nr]
-    calibration=paste(calibration,cal_tmp, sep=", ")}}
-  
-  cal_df$calibration = as.character(cal_df$calibration)
-  cal_df$eye = as.character(cal_df$eye)
   
   # summarize the tracked eyes tracked eye
   generals_temp = strsplit(tmp_file[grepl("SAMPLES\tGAZE",tmp_file)],split = "\t")
@@ -228,24 +211,28 @@ for (i in 1:length(input_file_names)){
     "SAMPLES\tGAZE",tmp_file)],split = "\t")[[1]][position_nr],0))
   
   # list of lists with calibration information for the .json file
+  cal_df$calibration = as.character(cal_df$calibration)
+  cal_df$eye = as.character(cal_df$eye)
+  
   cal_df$calibration=paste0('"',cal_df$calibration, '"')
   cal_df$eye=paste0('"',cal_df$eye, '"')
-  
-  for(i in 1:length(colnames(cal_df))){
-    if(i == 1){colnames_cal = paste0('["',colnames(cal_df)[i])}
-    else(colnames_cal = paste0(colnames_cal,'","',colnames(cal_df)[i]))}
-  colnames_cal = paste0(colnames_cal,'"]')
 
   cal_list = NULL
   for(row in 1:nrow(cal_df)){
     cal_df_tmp = cal_df[row,]
-    for(i in 1:ncol(cal_df_tmp)){
-      if(i == 1){row_cal = paste0(",\n[",cal_df_tmp[1])}
+    if(row == 1){
+      for(i in 1:ncol(cal_df_tmp)){
+      if(i == 1){row_cal = paste0("\n[",cal_df_tmp[1])}
       else{row_cal = paste0(row_cal,",",cal_df_tmp[i])}}
+    }
+    else{
+      for(i in 1:ncol(cal_df_tmp)){
+        if(i == 1){row_cal = paste0(",\n[",cal_df_tmp[1])}
+        else{row_cal = paste0(row_cal,",",cal_df_tmp[i])}}}
     row_cal = paste0(row_cal,"]")
   cal_list = paste0(cal_list,row_cal)
   }
-  cal_list = paste0("\n[\n",colnames_cal, cal_list, "\n]")
+  cal_list = paste0("\n[", cal_list, "\n]")
     
   ######################################################################
   
@@ -266,16 +253,11 @@ for (i in 1:length(input_file_names)){
               ,'"SoftwareVersion": "',readout_file[13,2],'",\n\t'
               ,'"TaskDescription": "',readout_file[14,2],'",\n\t'
               ,'"Instructions": "',readout_file[15,2],'",\n\t'
-              ,'"Calibration type": "',calibration,'",\n\t'
               ,'"CalibrationPosition": "',readout_file[16,2],'",\n\t'
               ,'"CalibrationDistance": "',readout_file[17,2],'",\n\t'
               ,'"RecordedEye": "',eye,'",\n\t'
-              ,'"MaximalCalibrationError":'
-              ,' ',max(cal_df$error_max[cal_exp:nrow(cal_df)]),',\n\t'
-              ,'"AverageCalibrationError":'
-              ,' ',mean(cal_df$error_avg[cal_exp:nrow(cal_df)]),',\n\t'
-              ,'"CalibrationList":}\n'
-              ,cal_list,sep = "")
+              ,'"CalibrationList":'
+              ,cal_list,'\n}',sep = "")
               , file = paste(indi_folder_path,"/sub-",vp,"_acq-",aq,
                              "_task-",readout_file[1,2],"_eyetrack.json",sep="")) 
 
@@ -295,19 +277,14 @@ write(paste('{\n\t"Name": "',readout_file[18,2],'",\n\t'
 
 participant_df = data.frame(participant_id = participant_id)
 ########OPTIONAL ADD FURTHER USEFULL INFORMATION ABOUT THE PARTICIPANTS###############
-
+describe_df = read.table("./descriptives.txt", header = TRUE, sep = ":") 
+participant_df$age = describe_df$age
 ######################################################################################
 
 write.table(participant_df,row.names = F, file = paste(output_folder,
                                                    "task-",readout_file[1,2],"_participant.tsv",sep=""))
 
 ```
-
-
-
-
-
-
 
 
 
