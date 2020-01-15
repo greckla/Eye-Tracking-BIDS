@@ -5,7 +5,7 @@ EndMessage:ENDPRESENTATION
 EventIdentifier:EFIX
 PupilPositionType:raw pupil position on screen
 RawSamples:recorded
-IncludedEvents:[[Start of fixation, "SFIX"],[End of fixation, "EFIX"],[Start of saccade, "SSACC"], [End of saccade, "ESACC"],[Start of blink, "SBLINK"], [End of blink, "EBLINK"]]
+IncludedEvents:[["Start of fixation", "SFIX"],["End of fixation", "EFIX"],["Start of saccade", "SSACC"], ["End of saccade", "ESACC"],["Start of blink", "SBLINK"], ["End of blink", "EBLINK"]]
 DetectionAlgorithm:SR-Research
 InstitutionName:Goethe-University of Frankfurt; Department of Psychology
 InstitutionAddress:Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany

@@ -228,10 +228,13 @@ for (i in 1:length(input_file_names)){
     "SAMPLES\tGAZE",tmp_file)],split = "\t")[[1]][position_nr],0))
   
   # list of lists with calibration information for the .json file
+  cal_df$calibration=paste0('"',cal_df$calibration, '"')
+  cal_df$eye=paste0('"',cal_df$eye, '"')
+  
   for(i in 1:length(colnames(cal_df))){
-    if(i == 1){colnames_cal = paste0("[",colnames(cal_df)[i])}
-    else(colnames_cal = paste0(colnames_cal,",",colnames(cal_df)[i]))}
-  colnames_cal = paste0(colnames_cal,"]")
+    if(i == 1){colnames_cal = paste0('["',colnames(cal_df)[i])}
+    else(colnames_cal = paste0(colnames_cal,'","',colnames(cal_df)[i]))}
+  colnames_cal = paste0(colnames_cal,'"]')
 
   cal_list = NULL
   for(row in 1:nrow(cal_df)){
@@ -299,6 +302,10 @@ write.table(participant_df,row.names = F, file = paste(output_folder,
                                                    "task-",readout_file[1,2],"_participant.tsv",sep=""))
 
 ```
+
+
+
+
 
 
 
