@@ -5,3 +5,5 @@
 *.knit.md
 .Rproj.user
 *backup.*
+*.nb.html
+/irrelevant
