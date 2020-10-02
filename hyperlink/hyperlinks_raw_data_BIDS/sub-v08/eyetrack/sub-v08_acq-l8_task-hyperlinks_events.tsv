@@ -1,0 +1,321 @@
+"onset" "duration" "sample" "trial_type" "event_nr" "aoi" "trial" "target_word" "color" "mask" "underlining" "sentenceNr" "response"
+0 2.019 19084045 "Exp.Trial" 1 "[[513,568,\"NA\",\"NA\"]]" 1 "Tolle" "blue" "degradated" "not underlined" "300" 0
+8.605 1.517 19092650 "Exp.Trial" 2 "[[290,345,\"NA\",\"NA\"]]" 2 "Tabak" "blue" "degradated" "not underlined" "316" NA
+15.236 2.2 19099281 "Exp.Trial" 3 "[[314,369,\"NA\",\"NA\"]]" 3 "Biest" "black" "degradated" "underlined" "114" NA
+22.683 4.042 19106728 "Exp.Trial" 4 "[[252,307,\"NA\",\"NA\"]]" 4 "Sumpf" "blue" "non-degradated" "underlined" "182" NA
+32.475 2.436 19116520 "Exp.Trial" 5 "[[476,531,\"NA\",\"NA\"]]" 5 "Reibe" "blue" "degradated" "not underlined" "295" NA
+40.256 2.308 19124301 "Exp.Trial" 6 "[[314,369,\"NA\",\"NA\"]]" 6 "Härte" "black" "non-degradated" "not underlined" "72" NA
+48.175 2.051 19132220 "Exp.Trial" 7 "[[389,444,\"NA\",\"NA\"]]" 7 "Bauer" "blue" "non-degradated" "underlined" "196" NA
+54.666 2.814 19138711 "Exp.Trial" 8 "[[314,369,\"NA\",\"NA\"]]" 8 "Dicke" "black" "non-degradated" "not underlined" "43" NA
+61.99 1.279 19146035 "Exp.Trial" 9 "[[290,345,\"NA\",\"NA\"]]" 9 "Anker" "black" "non-degradated" "underlined" "22" 0
+122.736 2.202 19206781 "Exp.Trial" 10 "[[426,481,\"NA\",\"NA\"]]" 10 "Buchs" "black" "non-degradated" "underlined" "5" NA
+127.476 2.112 19211521 "Exp.Trial" 11 "[[426,481,\"NA\",\"NA\"]]" 11 "Nudel" "black" "degradated" "not underlined" "154" 0
+137.1 2.717 19221145 "Exp.Trial" 12 "[[327,382,\"NA\",\"NA\"]]" 12 "Sorte" "blue" "degradated" "not underlined" "299" NA
+141.501 1.783 19225546 "Exp.Trial" 13 "[[252,307,\"NA\",\"NA\"]]" 13 "Major" "blue" "non-degradated" "underlined" "195" NA
+145.631 1.555 19229676 "Exp.Trial" 14 "[[339,394,\"NA\",\"NA\"]]" 14 "Seide" "black" "degradated" "not underlined" "152" NA
+148.753 1.558 19232798 "Exp.Trial" 15 "[[240,295,\"NA\",\"NA\"]]" 15 "Amsel" "black" "degradated" "not underlined" "137" NA
+153 1.524 19237045 "Exp.Trial" 16 "[[228,283,\"NA\",\"NA\"]]" 16 "Baske" "black" "non-degradated" "not underlined" "78" 0
+162.664 1.877 19246709 "Exp.Trial" 17 "[[414,469,\"NA\",\"NA\"]]" 17 "Block" "black" "non-degradated" "not underlined" "60" NA
+167.212 2.108 19251257 "Exp.Trial" 18 "[[352,407,\"NA\",\"NA\"]]" 18 "Radio" "black" "degradated" "underlined" "109" NA
+170.923 2.431 19254968 "Exp.Trial" 19 "[[228,283,\"NA\",\"NA\"]]" 19 "Wuchs" "black" "degradated" "underlined" "85" NA
+176.16 2.52 19260205 "Exp.Trial" 20 "[[228,283,\"NA\",\"NA\"]]" 20 "Kongo" "black" "non-degradated" "underlined" "15" NA
+180.282 1.908 19264327 "Exp.Trial" 21 "[[228,283,\"NA\",\"NA\"]]" 21 "Blatt" "black" "degradated" "underlined" "115" NA
+183.852 2.386 19267897 "Exp.Trial" 22 "[[290,345,\"NA\",\"NA\"]]" 22 "Seife" "black" "non-degradated" "underlined" "6" NA
+189.217 2.223 19273262 "Exp.Trial" 23 "[[327,382,\"NA\",\"NA\"]]" 23 "Karte" "blue" "degradated" "underlined" "254" NA
+193.873 1.613 19277918 "Exp.Trial" 24 "[[352,407,\"NA\",\"NA\"]]" 24 "Optik" "blue" "degradated" "not underlined" "301" NA
+197.801 2.375 19281846 "Exp.Trial" 25 "[[376,431,\"NA\",\"NA\"]]" 25 "Abbau" "blue" "degradated" "not underlined" "302" NA
+201.856 2.099 19285901 "Exp.Trial" 26 "[[277,332,\"NA\",\"NA\"]]" 26 "Blech" "black" "non-degradated" "underlined" "36" NA
+206.113 1.849 19290158 "Exp.Trial" 27 "[[414,469,\"NA\",\"NA\"]]" 27 "Plane" "blue" "degradated" "underlined" "277" NA
+210.488 2.136 19294533 "Exp.Trial" 28 "[[228,283,\"NA\",\"NA\"]]" 28 "Basar" "blue" "non-degradated" "not underlined" "203" NA
+215.942 2.265 19299987 "Exp.Trial" 29 "[[352,407,\"NA\",\"NA\"]]" 29 "Witwe" "black" "non-degradated" "not underlined" "64" NA
+220.694 1.532 19304739 "Exp.Trial" 30 "[[228,283,\"NA\",\"NA\"]]" 30 "Regal" "black" "non-degradated" "underlined" "10" NA
+223.915 1.569 19307960 "Exp.Trial" 31 "[[240,295,\"NA\",\"NA\"]]" 31 "Flair" "black" "degradated" "not underlined" "147" NA
+228.044 2.34 19312089 "Exp.Trial" 32 "[[252,307,\"NA\",\"NA\"]]" 32 "Tunke" "black" "non-degradated" "underlined" "30" NA
+232.034 2.548 19316079 "Exp.Trial" 33 "[[290,345,\"NA\",\"NA\"]]" 33 "Otter" "black" "degradated" "underlined" "112" NA
+236.934 2.037 19320979 "Exp.Trial" 34 "[[265,320,\"NA\",\"NA\"]]" 34 "Balte" "blue" "non-degradated" "not underlined" "239" 0
+246.578 2.234 19330623 "Exp.Trial" 35 "[[277,332,\"NA\",\"NA\"]]" 35 "Tapir" "black" "degradated" "underlined" "92" 0
+260.883 1.923 19344928 "Exp.Trial" 36 "[[228,283,\"NA\",\"NA\"]]" 36 "Echse" "blue" "degradated" "not underlined" "288" NA
+264.409 2.64 19348454 "Exp.Trial" 37 "[[352,407,\"NA\",\"NA\"]]" 37 "Mimik" "blue" "degradated" "not underlined" "293" NA
+269.64 1.755 19353685 "Exp.Trial" 38 "[[488,543,\"NA\",\"NA\"]]" 38 "Götze" "blue" "non-degradated" "underlined" "179" NA
+274.234 1.748 19358279 "Exp.Trial" 39 "[[327,382,\"NA\",\"NA\"]]" 39 "Kelch" "black" "non-degradated" "underlined" "8" 0
+282.386 2.128 19366431 "Exp.Trial" 40 "[[426,481,\"NA\",\"NA\"]]" 40 "Meise" "black" "degradated" "underlined" "105" NA
+287.53 2.225 19371575 "Exp.Trial" 41 "[[228,283,\"NA\",\"NA\"]]" 41 "Lette" "black" "degradated" "underlined" "96" NA
+291.354 1.781 19375399 "Exp.Trial" 42 "[[302,357,\"NA\",\"NA\"]]" 42 "Notiz" "blue" "degradated" "underlined" "242" NA
+295.522 2.4 19379567 "Exp.Trial" 43 "[[314,369,\"NA\",\"NA\"]]" 43 "Brust" "blue" "degradated" "underlined" "251" NA
+301.45 2.705 19385495 "Exp.Trial" 44 "[[352,407,\"NA\",\"NA\"]]" 44 "Zwang" "blue" "degradated" "underlined" "272" NA
+306.782 1.873 19390827 "Exp.Trial" 45 "[[314,369,\"NA\",\"NA\"]]" 45 "Mafia" "black" "non-degradated" "underlined" "16" NA
+310.266 1.928 19394311 "Exp.Trial" 46 "[[389,444,\"NA\",\"NA\"]]" 46 "Puder" "blue" "non-degradated" "underlined" "181" NA
+314.721 2.688 19398766 "Exp.Trial" 47 "[[290,345,\"NA\",\"NA\"]]" 47 "Bürde" "blue" "non-degradated" "not underlined" "238" NA
+319.095 2.05 19403140 "Exp.Trial" 48 "[[339,394,\"NA\",\"NA\"]]" 48 "Buche" "black" "degradated" "not underlined" "122" NA
+323.979 2.313 19408024 "Exp.Trial" 49 "[[451,506,\"NA\",\"NA\"]]" 49 "Ziege" "black" "non-degradated" "not underlined" "51" NA
+327.844 2.378 19411889 "Exp.Trial" 50 "[[277,332,\"NA\",\"NA\"]]" 50 "Salbe" "blue" "degradated" "underlined" "247" NA
+331.827 2.156 19415872 "Exp.Trial" 51 "[[339,394,\"NA\",\"NA\"]]" 51 "Insel" "black" "non-degradated" "underlined" "2" NA
+337.423 1.816 19421468 "Exp.Trial" 52 "[[327,382,\"NA\",\"NA\"]]" 52 "Knast" "blue" "degradated" "underlined" "278" NA
+341.611 2.034 19425656 "Exp.Trial" 53 "[[314,369,\"NA\",\"NA\"]]" 53 "Kajak" "blue" "non-degradated" "underlined" "190" NA
+345.416 1.792 19429461 "Exp.Trial" 54 "[[265,320,\"NA\",\"NA\"]]" 54 "Dämon" "blue" "non-degradated" "underlined" "192" NA
+350.34 2.407 19434385 "Exp.Trial" 55 "[[364,419,\"NA\",\"NA\"]]" 55 "Garde" "black" "non-degradated" "underlined" "39" NA
+354.815 1.383 19438860 "Exp.Trial" 56 "[[290,345,\"NA\",\"NA\"]]" 56 "Wunde" "blue" "non-degradated" "not underlined" "202" NA
+357.828 1.797 19441873 "Exp.Trial" 57 "[[277,332,\"NA\",\"NA\"]]" 57 "Mensa" "black" "degradated" "underlined" "83" NA
+361.858 1.477 19445903 "Exp.Trial" 58 "[[314,369,\"NA\",\"NA\"]]" 58 "Ikone" "blue" "degradated" "underlined" "267" NA
+365.011 1.506 19449056 "Exp.Trial" 59 "[[339,394,\"NA\",\"NA\"]]" 59 "Karat" "black" "non-degradated" "underlined" "37" NA
+368.631 1.796 19452676 "Exp.Trial" 60 "[[252,307,\"NA\",\"NA\"]]" 60 "Motte" "black" "non-degradated" "not underlined" "63" NA
+373.415 2.333 19457460 "Exp.Trial" 61 "[[265,320,\"NA\",\"NA\"]]" 61 "Beize" "black" "non-degradated" "not underlined" "58" NA
+377.497 2.083 19461542 "Exp.Trial" 62 "[[240,295,\"NA\",\"NA\"]]" 62 "Gräte" "blue" "degradated" "underlined" "243" NA
+381.562 1.559 19465607 "Exp.Trial" 63 "[[228,283,\"NA\",\"NA\"]]" 63 "Nylon" "black" "degradated" "not underlined" "139" NA
+384.554 1.887 19468599 "Exp.Trial" 64 "[[252,307,\"NA\",\"NA\"]]" 64 "Bitte" "blue" "non-degradated" "not underlined" "235" NA
+388.033 1.661 19472078 "Exp.Trial" 65 "[[228,283,\"NA\",\"NA\"]]" 65 "Ölung" "black" "non-degradated" "underlined" "14" 0
+397.087 1.762 19481132 "Exp.Trial" 66 "[[252,307,\"NA\",\"NA\"]]" 66 "Mappe" "black" "non-degradated" "underlined" "32" NA
+400.479 1.676 19484524 "Exp.Trial" 67 "[[314,369,\"NA\",\"NA\"]]" 67 "Beruf" "black" "non-degradated" "underlined" "17" NA
+404.628 1.708 19488673 "Exp.Trial" 68 "[[228,283,\"NA\",\"NA\"]]" 68 "Alter" "blue" "degradated" "not underlined" "296" NA
+408.816 1.787 19492861 "Exp.Trial" 69 "[[290,345,\"NA\",\"NA\"]]" 69 "Möbel" "blue" "non-degradated" "not underlined" "226" NA
+412.336 2.41 19496381 "Exp.Trial" 70 "[[277,332,\"NA\",\"NA\"]]" 70 "Dunst" "black" "degradated" "not underlined" "150" NA
+416.405 2.326 19500450 "Exp.Trial" 71 "[[240,295,\"NA\",\"NA\"]]" 71 "Kutte" "black" "non-degradated" "underlined" "9" NA
+420.912 1.824 19504957 "Exp.Trial" 72 "[[414,469,\"NA\",\"NA\"]]" 72 "Decke" "black" "degradated" "underlined" "86" NA
+425.448 2.475 19509493 "Exp.Trial" 73 "[[252,307,\"NA\",\"NA\"]]" 73 "Hülle" "blue" "degradated" "not underlined" "294" 0
+435.35 1.524 19519395 "Exp.Trial" 74 "[[228,283,\"NA\",\"NA\"]]" 74 "Krebs" "black" "non-degradated" "underlined" "29" 0
+441.802 1.739 19525847 "Exp.Trial" 75 "[[339,394,\"NA\",\"NA\"]]" 75 "Opfer" "black" "degradated" "not underlined" "157" NA
+445.234 2.629 19529279 "Exp.Trial" 76 "[[215,270,\"NA\",\"NA\"]]" 76 "Bowle" "blue" "degradated" "underlined" "269" NA
+450.1 1.63 19534145 "Exp.Trial" 77 "[[215,270,\"NA\",\"NA\"]]" 77 "Liege" "blue" "degradated" "underlined" "280" 0
+456.452 1.211 19540497 "Exp.Trial" 78 "[[302,357,\"NA\",\"NA\"]]" 78 "Rache" "blue" "non-degradated" "not underlined" "223" NA
+461.111 1.583 19545156 "Exp.Trial" 79 "[[252,307,\"NA\",\"NA\"]]" 79 "Motor" "black" "degradated" "underlined" "89" NA
+465.254 2.447 19549299 "Exp.Trial" 80 "[[203,258,\"NA\",\"NA\"]]" 80 "Hafer" "blue" "non-degradated" "underlined" "177" NA
+469.896 1.662 19553941 "Exp.Trial" 81 "[[426,481,\"NA\",\"NA\"]]" 81 "Pfund" "blue" "non-degradated" "underlined" "164" NA
+473.712 1.809 19557757 "Exp.Trial" 82 "[[240,295,\"NA\",\"NA\"]]" 82 "Torte" "black" "degradated" "not underlined" "149" 0
+481.169 1.482 19565214 "Exp.Trial" 83 "[[327,382,\"NA\",\"NA\"]]" 83 "Reuse" "blue" "degradated" "not underlined" "315" NA
+484.161 1.681 19568206 "Exp.Trial" 84 "[[265,320,\"NA\",\"NA\"]]" 84 "Tante" "blue" "non-degradated" "not underlined" "215" NA
+487.42 3.254 19571465 "Exp.Trial" 85 "[[215,270,\"NA\",\"NA\"]]" 85 "Psalm" "black" "degradated" "underlined" "118" NA
+492.812 2.003 19576857 "Exp.Trial" 86 "[[290,345,\"NA\",\"NA\"]]" 86 "Porto" "black" "non-degradated" "not underlined" "59" NA
+497.146 2.108 19581191 "Exp.Trial" 87 "[[228,283,\"NA\",\"NA\"]]" 87 "Datum" "black" "degradated" "underlined" "107" NA
+502.383 1.968 19586428 "Exp.Trial" 88 "[[252,307,\"NA\",\"NA\"]]" 88 "Fehde" "blue" "non-degradated" "underlined" "176" NA
+506.107 1.671 19590152 "Exp.Trial" 89 "[[364,419,\"NA\",\"NA\"]]" 89 "Bande" "blue" "non-degradated" "not underlined" "209" NA
+510.251 2.276 19594296 "Exp.Trial" 90 "[[488,543,\"NA\",\"NA\"]]" 90 "Bühne" "black" "degradated" "underlined" "101" NA
+514.106 2.467 19598151 "Exp.Trial" 91 "[[302,357,\"NA\",\"NA\"]]" 91 "Büste" "black" "non-degradated" "underlined" "25" NA
+518.169 2.474 19602214 "Exp.Trial" 92 "[[401,456,\"NA\",\"NA\"]]" 92 "Agent" "blue" "degradated" "not underlined" "291" NA
+522.253 2.027 19606298 "Exp.Trial" 93 "[[215,270,\"NA\",\"NA\"]]" 93 "Tarif" "black" "degradated" "underlined" "90" NA
+525.909 2.296 19609954 "Exp.Trial" 94 "[[277,332,\"NA\",\"NA\"]]" 94 "Kater" "blue" "degradated" "underlined" "252" NA
+530.595 1.923 19614640 "Exp.Trial" 95 "[[277,332,\"NA\",\"NA\"]]" 95 "Beton" "black" "degradated" "not underlined" "125" NA
+534.134 1.847 19618179 "Exp.Trial" 96 "[[265,320,\"NA\",\"NA\"]]" 96 "Sünde" "blue" "non-degradated" "not underlined" "207" NA
+537.659 1.986 19621704 "Exp.Trial" 97 "[[538,593,\"NA\",\"NA\"]]" 97 "Eimer" "blue" "non-degradated" "not underlined" "216" NA
+541.827 2.311 19625872 "Exp.Trial" 98 "[[389,444,\"NA\",\"NA\"]]" 98 "Obhut" "black" "non-degradated" "underlined" "40" NA
+545.744 1.641 19629789 "Exp.Trial" 99 "[[277,332,\"NA\",\"NA\"]]" 99 "Zeche" "black" "degradated" "underlined" "82" NA
+548.943 1.687 19632988 "Exp.Trial" 100 "[[314,369,\"NA\",\"NA\"]]" 100 "Luder" "blue" "degradated" "underlined" "259" NA
+552.662 2.542 19636707 "Exp.Trial" 101 "[[550,605,\"NA\",\"NA\"]]" 101 "Korps" "blue" "degradated" "not underlined" "309" NA
+557.289 2.366 19641334 "Exp.Trial" 102 "[[277,332,\"NA\",\"NA\"]]" 102 "Kehle" "blue" "degradated" "not underlined" "319" NA
+562.034 1.838 19646079 "Exp.Trial" 103 "[[290,345,\"NA\",\"NA\"]]" 103 "Fülle" "blue" "degradated" "underlined" "271" NA
+566.077 1.725 19650122 "Exp.Trial" 104 "[[265,320,\"NA\",\"NA\"]]" 104 "Votum" "blue" "degradated" "not underlined" "317" NA
+569.297 2.689 19653342 "Exp.Trial" 105 "[[252,307,\"NA\",\"NA\"]]" 105 "Abgas" "black" "degradated" "not underlined" "138" 0
+577.522 1.594 19661567 "Exp.Trial" 106 "[[228,283,\"NA\",\"NA\"]]" 106 "Onkel" "black" "non-degradated" "underlined" "35" NA
+580.641 2.361 19664686 "Exp.Trial" 107 "[[339,394,\"NA\",\"NA\"]]" 107 "Trott" "blue" "non-degradated" "underlined" "194" NA
+584.518 1.631 19668563 "Exp.Trial" 108 "[[314,369,\"NA\",\"NA\"]]" 108 "Feder" "blue" "non-degradated" "not underlined" "231" NA
+588.548 3.376 19672593 "Exp.Trial" 109 "[[314,369,\"NA\",\"NA\"]]" 109 "Zucht" "black" "degradated" "underlined" "111" NA
+593.327 2.997 19677372 "Exp.Trial" 110 "[[277,332,\"NA\",\"NA\"]]" 110 "Chrom" "blue" "non-degradated" "not underlined" "213" NA
+597.874 1.943 19681919 "Exp.Trial" 111 "[[314,369,\"NA\",\"NA\"]]" 111 "Rinde" "black" "degradated" "not underlined" "148" NA
+602.462 2.566 19686507 "Exp.Trial" 112 "[[265,320,\"NA\",\"NA\"]]" 112 "Manko" "blue" "non-degradated" "underlined" "173" NA
+607.189 1.989 19691234 "Exp.Trial" 113 "[[252,307,\"NA\",\"NA\"]]" 113 "Klima" "black" "degradated" "not underlined" "141" NA
+612.598 1.664 19696643 "Exp.Trial" 114 "[[265,320,\"NA\",\"NA\"]]" 114 "Nugat" "black" "non-degradated" "not underlined" "55" NA
+616.734 1.655 19700779 "Exp.Trial" 115 "[[339,394,\"NA\",\"NA\"]]" 115 "Spore" "black" "non-degradated" "not underlined" "42" NA
+620.473 1.928 19704518 "Exp.Trial" 116 "[[414,469,\"NA\",\"NA\"]]" 116 "Pfand" "blue" "non-degradated" "not underlined" "201" NA
+623.997 2.793 19708042 "Exp.Trial" 117 "[[376,431,\"NA\",\"NA\"]]" 117 "Sehne" "black" "non-degradated" "underlined" "26" NA
+628.323 2.141 19712368 "Exp.Trial" 118 "[[240,295,\"NA\",\"NA\"]]" 118 "Szene" "black" "non-degradated" "underlined" "23" NA
+633.063 1.628 19717108 "Exp.Trial" 119 "[[290,345,\"NA\",\"NA\"]]" 119 "Drama" "blue" "degradated" "not underlined" "314" NA
+637.188 1.458 19721233 "Exp.Trial" 120 "[[228,283,\"NA\",\"NA\"]]" 120 "Vogel" "blue" "non-degradated" "not underlined" "206" NA
+641.031 1.662 19725076 "Exp.Trial" 121 "[[277,332,\"NA\",\"NA\"]]" 121 "Datei" "black" "degradated" "not underlined" "140" NA
+644.7 1.813 19728745 "Exp.Trial" 122 "[[252,307,\"NA\",\"NA\"]]" 122 "Knabe" "black" "non-degradated" "underlined" "1" NA
+648.671 1.72 19732716 "Exp.Trial" 123 "[[203,258,\"NA\",\"NA\"]]" 123 "Thron" "blue" "degradated" "not underlined" "307" NA
+652.082 1.891 19736127 "Exp.Trial" 124 "[[376,431,\"NA\",\"NA\"]]" 124 "Party" "blue" "non-degradated" "underlined" "184" NA
+655.98 1.581 19740025 "Exp.Trial" 125 "[[352,407,\"NA\",\"NA\"]]" 125 "Münze" "black" "degradated" "underlined" "94" NA
+659.543 1.847 19743588 "Exp.Trial" 126 "[[228,283,\"NA\",\"NA\"]]" 126 "Radar" "blue" "degradated" "not underlined" "306" NA
+664.025 1.437 19748070 "Exp.Trial" 127 "[[376,431,\"NA\",\"NA\"]]" 127 "Wolle" "black" "degradated" "not underlined" "159" NA
+667.602 2.11 19751647 "Exp.Trial" 128 "[[401,456,\"NA\",\"NA\"]]" 128 "Felge" "black" "degradated" "not underlined" "160" NA
+671.221 2.089 19755266 "Exp.Trial" 129 "[[327,382,\"NA\",\"NA\"]]" 129 "Daune" "black" "degradated" "underlined" "110" NA
+674.812 2.131 19758857 "Exp.Trial" 130 "[[327,382,\"NA\",\"NA\"]]" 130 "Beleg" "blue" "non-degradated" "not underlined" "212" NA
+679.292 1.785 19763337 "Exp.Trial" 131 "[[240,295,\"NA\",\"NA\"]]" 131 "Jubel" "black" "non-degradated" "underlined" "12" 0
+686.209 1.87 19770254 "Exp.Trial" 132 "[[252,307,\"NA\",\"NA\"]]" 132 "Zwerg" "black" "degradated" "underlined" "93" NA
+689.601 1.683 19773646 "Exp.Trial" 133 "[[277,332,\"NA\",\"NA\"]]" 133 "Geist" "black" "degradated" "not underlined" "134" NA
+693.372 1.963 19777417 "Exp.Trial" 134 "[[525,580,\"NA\",\"NA\"]]" 134 "Heber" "blue" "degradated" "not underlined" "292" NA
+696.963 1.721 19781008 "Exp.Trial" 135 "[[252,307,\"NA\",\"NA\"]]" 135 "Ruder" "blue" "non-degradated" "not underlined" "228" NA
+700.123 2.467 19784168 "Exp.Trial" 136 "[[476,531,\"NA\",\"NA\"]]" 136 "Wanst" "blue" "degradated" "not underlined" "297" NA
+703.966 1.94 19788011 "Exp.Trial" 137 "[[327,382,\"NA\",\"NA\"]]" 137 "Laich" "black" "degradated" "underlined" "113" NA
+707.392 2.919 19791437 "Exp.Trial" 138 "[[228,283,\"NA\",\"NA\"]]" 138 "Masse" "black" "non-degradated" "not underlined" "50" NA
+711.966 1.509 19796011 "Exp.Trial" 139 "[[376,431,\"NA\",\"NA\"]]" 139 "Würde" "black" "degradated" "underlined" "104" NA
+716.102 1.889 19800147 "Exp.Trial" 140 "[[228,283,\"NA\",\"NA\"]]" 140 "Etage" "blue" "degradated" "underlined" "260" 0
+725.973 1.504 19810018 "Exp.Trial" 141 "[[277,332,\"NA\",\"NA\"]]" 141 "Herde" "blue" "non-degradated" "not underlined" "204" NA
+730.918 1.827 19814963 "Exp.Trial" 142 "[[302,357,\"NA\",\"NA\"]]" 142 "Kolik" "blue" "degradated" "underlined" "253" NA
+734.734 1.898 19818779 "Exp.Trial" 143 "[[414,469,\"NA\",\"NA\"]]" 143 "Quart" "black" "degradated" "not underlined" "146" NA
+738.167 2.606 19822212 "Exp.Trial" 144 "[[290,345,\"NA\",\"NA\"]]" 144 "Sitte" "black" "degradated" "not underlined" "151" NA
+743.386 2.234 19827431 "Exp.Trial" 145 "[[339,394,\"NA\",\"NA\"]]" 145 "Weber" "black" "non-degradated" "underlined" "38" 0
+751.729 2.697 19835774 "Exp.Trial" 146 "[[290,345,\"NA\",\"NA\"]]" 146 "Miliz" "black" "degradated" "underlined" "120" NA
+756.063 1.75 19840108 "Exp.Trial" 147 "[[228,283,\"NA\",\"NA\"]]" 147 "Phase" "black" "non-degradated" "not underlined" "69" NA
+759.476 1.939 19843521 "Exp.Trial" 148 "[[302,357,\"NA\",\"NA\"]]" 148 "Säule" "black" "degradated" "not underlined" "126" 0
+767.813 2.627 19851858 "Exp.Trial" 149 "[[401,456,\"NA\",\"NA\"]]" 149 "Wange" "blue" "degradated" "underlined" "256" NA
+771.876 2.292 19855921 "Exp.Trial" 150 "[[228,283,\"NA\",\"NA\"]]" 150 "Sturz" "blue" "non-degradated" "not underlined" "219" NA
+777.134 1.841 19861179 "Exp.Trial" 151 "[[389,444,\"NA\",\"NA\"]]" 151 "Beute" "blue" "non-degradated" "underlined" "169" NA
+780.453 1.742 19864498 "Exp.Trial" 152 "[[265,320,\"NA\",\"NA\"]]" 152 "Miene" "black" "degradated" "not underlined" "155" NA
+784.422 1.717 19868467 "Exp.Trial" 153 "[[252,307,\"NA\",\"NA\"]]" 153 "Depot" "black" "degradated" "not underlined" "135" NA
+788.552 2.026 19872597 "Exp.Trial" 154 "[[228,283,\"NA\",\"NA\"]]" 154 "Pferd" "blue" "degradated" "not underlined" "282" 0
+797.192 1.309 19881237 "Exp.Trial" 155 "[[265,320,\"NA\",\"NA\"]]" 155 "Natur" "blue" "degradated" "underlined" "246" NA
+800.804 1.959 19884849 "Exp.Trial" 156 "[[290,345,\"NA\",\"NA\"]]" 156 "Zobel" "black" "degradated" "not underlined" "158" NA
+804.317 2.529 19888362 "Exp.Trial" 157 "[[339,394,\"NA\",\"NA\"]]" 157 "Organ" "blue" "degradated" "not underlined" "305" NA
+809.096 2.258 19893141 "Exp.Trial" 158 "[[240,295,\"NA\",\"NA\"]]" 158 "Abzug" "black" "degradated" "not underlined" "130" NA
+813.392 3.04 19897437 "Exp.Trial" 159 "[[327,382,\"NA\",\"NA\"]]" 159 "Ungar" "black" "degradated" "underlined" "95" NA
+817.972 2.667 19902017 "Exp.Trial" 160 "[[228,283,\"NA\",\"NA\"]]" 160 "Kunde" "black" "non-degradated" "underlined" "20" NA
+822.314 1.213 19906359 "Exp.Trial" 161 "[[265,320,\"NA\",\"NA\"]]" 161 "Pilot" "black" "degradated" "not underlined" "132" NA
+825.214 2.066 19909259 "Exp.Trial" 162 "[[401,456,\"NA\",\"NA\"]]" 162 "Kiste" "blue" "non-degradated" "underlined" "187" NA
+828.706 2.139 19912751 "Exp.Trial" 163 "[[550,605,\"NA\",\"NA\"]]" 163 "König" "blue" "non-degradated" "underlined" "178" 0
+837.216 2.701 19921261 "Exp.Trial" 164 "[[476,531,\"NA\",\"NA\"]]" 164 "Erlös" "black" "non-degradated" "not underlined" "47" 0
+847.312 1.742 19931357 "Exp.Trial" 165 "[[228,283,\"NA\",\"NA\"]]" 165 "Genre" "blue" "degradated" "underlined" "249" NA
+851.461 2.259 19935506 "Exp.Trial" 166 "[[339,394,\"NA\",\"NA\"]]" 166 "Raupe" "black" "degradated" "not underlined" "153" NA
+856.766 2.2 19940811 "Exp.Trial" 167 "[[414,469,\"NA\",\"NA\"]]" 167 "Fjord" "blue" "degradated" "not underlined" "283" 0
+865.302 1.858 19949347 "Exp.Trial" 168 "[[302,357,\"NA\",\"NA\"]]" 168 "Waage" "blue" "degradated" "underlined" "255" 0
+873.281 1.696 19957326 "Exp.Trial" 169 "[[215,270,\"NA\",\"NA\"]]" 169 "Yacht" "black" "non-degradated" "underlined" "28" NA
+880.776 1.995 19964821 "Exp.Trial" 170 "[[339,394,\"NA\",\"NA\"]]" 170 "Falle" "blue" "degradated" "underlined" "244" NA
+885.052 2.266 19969097 "Exp.Trial" 171 "[[426,481,\"NA\",\"NA\"]]" 171 "Beuge" "black" "non-degradated" "not underlined" "73" NA
+889.997 1.825 19974042 "Exp.Trial" 172 "[[240,295,\"NA\",\"NA\"]]" 172 "Pfahl" "blue" "non-degradated" "underlined" "189" 0
+898.104 1.718 19982149 "Exp.Trial" 173 "[[252,307,\"NA\",\"NA\"]]" 173 "Zicke" "blue" "non-degradated" "underlined" "183" NA
+901.819 2.152 19985864 "Exp.Trial" 174 "[[277,332,\"NA\",\"NA\"]]" 174 "Pizza" "blue" "non-degradated" "not underlined" "211" NA
+907.674 1.676 19991719 "Exp.Trial" 175 "[[277,332,\"NA\",\"NA\"]]" 175 "Gerät" "black" "degradated" "underlined" "119" NA
+911.199 2.037 19995244 "Exp.Trial" 176 "[[252,307,\"NA\",\"NA\"]]" 176 "Sense" "black" "non-degradated" "not underlined" "44" NA
+915.846 1.68 19999891 "Exp.Trial" 177 "[[364,419,\"NA\",\"NA\"]]" 177 "Viper" "black" "non-degradated" "underlined" "19" NA
+919.835 1.481 20003880 "Exp.Trial" 178 "[[376,431,\"NA\",\"NA\"]]" 178 "Eifer" "black" "degradated" "underlined" "84" NA
+923.726 1.489 20007771 "Exp.Trial" 179 "[[513,568,\"NA\",\"NA\"]]" 179 "Modul" "black" "degradated" "not underlined" "127" NA
+927.443 1.798 20011488 "Exp.Trial" 180 "[[215,270,\"NA\",\"NA\"]]" 180 "Linse" "blue" "non-degradated" "underlined" "162" NA
+931.679 2.361 20015724 "Exp.Trial" 181 "[[327,382,\"NA\",\"NA\"]]" 181 "Zuzug" "black" "degradated" "underlined" "106" 0
+942.159 1.811 20026204 "Exp.Trial" 182 "[[339,394,\"NA\",\"NA\"]]" 182 "Gebet" "black" "degradated" "not underlined" "156" NA
+945.532 2.096 20029577 "Exp.Trial" 183 "[[525,580,\"NA\",\"NA\"]]" 183 "Kakao" "blue" "non-degradated" "not underlined" "208" NA
+950.391 1.703 20034436 "Exp.Trial" 184 "[[240,295,\"NA\",\"NA\"]]" 184 "Feger" "blue" "degradated" "not underlined" "285" NA
+954.461 1.329 20038506 "Exp.Trial" 185 "[[376,431,\"NA\",\"NA\"]]" 185 "Anruf" "black" "degradated" "underlined" "91" NA
+957.786 2.114 20041831 "Exp.Trial" 186 "[[376,431,\"NA\",\"NA\"]]" 186 "Heide" "blue" "non-degradated" "underlined" "191" NA
+961.464 2.123 20045509 "Exp.Trial" 187 "[[401,456,\"NA\",\"NA\"]]" 187 "Bogen" "blue" "non-degradated" "not underlined" "221" NA
+965.952 2.041 20049997 "Exp.Trial" 188 "[[240,295,\"NA\",\"NA\"]]" 188 "Lauge" "blue" "non-degradated" "not underlined" "236" NA
+969.555 1.476 20053600 "Exp.Trial" 189 "[[401,456,\"NA\",\"NA\"]]" 189 "Weihe" "blue" "degradated" "underlined" "264" NA
+972.451 1.637 20056496 "Exp.Trial" 190 "[[228,283,\"NA\",\"NA\"]]" 190 "Runde" "black" "degradated" "underlined" "108" NA
+975.789 1.653 20059834 "Exp.Trial" 191 "[[352,407,\"NA\",\"NA\"]]" 191 "Stola" "black" "degradated" "not underlined" "124" 0
+983.286 2.897 20067331 "Exp.Trial" 192 "[[488,543,\"NA\",\"NA\"]]" 192 "Kreml" "blue" "non-degradated" "not underlined" "222" NA
+987.778 1.868 20071823 "Exp.Trial" 193 "[[389,444,\"NA\",\"NA\"]]" 193 "Abruf" "black" "non-degradated" "not underlined" "71" NA
+991.197 1.632 20075242 "Exp.Trial" 194 "[[252,307,\"NA\",\"NA\"]]" 194 "Druck" "black" "non-degradated" "not underlined" "75" NA
+995.112 1.751 20079157 "Exp.Trial" 195 "[[352,407,\"NA\",\"NA\"]]" 195 "Lachs" "black" "non-degradated" "underlined" "24" 0
+1002.177 2.071 20086222 "Exp.Trial" 196 "[[240,295,\"NA\",\"NA\"]]" 196 "Probe" "black" "degradated" "underlined" "117" NA
+1006.146 1.484 20090191 "Exp.Trial" 197 "[[364,419,\"NA\",\"NA\"]]" 197 "Polio" "black" "degradated" "underlined" "103" NA
+1009.24 1.621 20093285 "Exp.Trial" 198 "[[228,283,\"NA\",\"NA\"]]" 198 "Hecke" "blue" "non-degradated" "not underlined" "230" NA
+1012.792 1.7 20096837 "Exp.Trial" 199 "[[401,456,\"NA\",\"NA\"]]" 199 "Gicht" "black" "non-degradated" "underlined" "33" NA
+1016.703 1.481 20100748 "Exp.Trial" 200 "[[364,419,\"NA\",\"NA\"]]" 200 "Figur" "blue" "non-degradated" "not underlined" "232" NA
+1019.954 2.099 20103999 "Exp.Trial" 201 "[[240,295,\"NA\",\"NA\"]]" 201 "Trupp" "blue" "degradated" "underlined" "262" NA
+1023.837 1.26 20107882 "Exp.Trial" 202 "[[290,345,\"NA\",\"NA\"]]" 202 "Taube" "black" "non-degradated" "not underlined" "41" NA
+1027.211 1.852 20111256 "Exp.Trial" 203 "[[215,270,\"NA\",\"NA\"]]" 203 "Pirat" "black" "degradated" "not underlined" "133" NA
+1030.673 2.576 20114718 "Exp.Trial" 204 "[[302,357,\"NA\",\"NA\"]]" 204 "Markt" "black" "non-degradated" "not underlined" "74" NA
+1035.341 2.081 20119386 "Exp.Trial" 205 "[[302,357,\"NA\",\"NA\"]]" 205 "China" "blue" "degradated" "underlined" "257" NA
+1039.173 1.338 20123218 "Exp.Trial" 206 "[[252,307,\"NA\",\"NA\"]]" 206 "Klotz" "black" "degradated" "not underlined" "136" NA
+1042.086 1.618 20126131 "Exp.Trial" 207 "[[265,320,\"NA\",\"NA\"]]" 207 "Spott" "blue" "non-degradated" "underlined" "180" NA
+1046.301 2.147 20130346 "Exp.Trial" 208 "[[302,357,\"NA\",\"NA\"]]" 208 "Feile" "blue" "non-degradated" "underlined" "185" 0
+1054.366 1.964 20138411 "Exp.Trial" 209 "[[240,295,\"NA\",\"NA\"]]" 209 "Plage" "black" "non-degradated" "not underlined" "54" NA
+1057.992 2.052 20142037 "Exp.Trial" 210 "[[265,320,\"NA\",\"NA\"]]" 210 "Getön" "blue" "non-degradated" "underlined" "175" NA
+1062.206 1.994 20146251 "Exp.Trial" 211 "[[314,369,\"NA\",\"NA\"]]" 211 "Villa" "blue" "non-degradated" "not underlined" "240" NA
+1065.658 2.048 20149703 "Exp.Trial" 212 "[[500,555,\"NA\",\"NA\"]]" 212 "Tulpe" "blue" "degradated" "underlined" "245" NA
+1069.262 2.127 20153307 "Exp.Trial" 213 "[[252,307,\"NA\",\"NA\"]]" 213 "Panne" "blue" "degradated" "underlined" "276" NA
+1072.987 1.594 20157032 "Exp.Trial" 214 "[[376,431,\"NA\",\"NA\"]]" 214 "Nagel" "black" "non-degradated" "not underlined" "65" NA
+1077.043 1.393 20161088 "Exp.Trial" 215 "[[240,295,\"NA\",\"NA\"]]" 215 "Messe" "blue" "degradated" "not underlined" "310" NA
+1080.807 2.556 20164852 "Exp.Trial" 216 "[[339,394,\"NA\",\"NA\"]]" 216 "Drill" "black" "degradated" "not underlined" "128" NA
+1084.921 1.539 20168966 "Exp.Trial" 217 "[[327,382,\"NA\",\"NA\"]]" 217 "Lücke" "black" "non-degradated" "not underlined" "80" NA
+1088.4 1.453 20172445 "Exp.Trial" 218 "[[265,320,\"NA\",\"NA\"]]" 218 "Bombe" "black" "degradated" "not underlined" "129" NA
+1091.52 2.122 20175565 "Exp.Trial" 219 "[[513,568,\"NA\",\"NA\"]]" 219 "Atoll" "black" "degradated" "underlined" "98" NA
+1095.238 1.681 20179283 "Exp.Trial" 220 "[[314,369,\"NA\",\"NA\"]]" 220 "Gecko" "blue" "degradated" "underlined" "268" 0
+1102.74 1.359 20186785 "Exp.Trial" 221 "[[252,307,\"NA\",\"NA\"]]" 221 "Kette" "blue" "non-degradated" "underlined" "199" NA
+1105.6 1.471 20189645 "Exp.Trial" 222 "[[228,283,\"NA\",\"NA\"]]" 222 "Übung" "black" "degradated" "underlined" "100" NA
+1109.272 1.578 20193317 "Exp.Trial" 223 "[[265,320,\"NA\",\"NA\"]]" 223 "Hocke" "blue" "degradated" "not underlined" "308" NA
+1112.384 1.861 20196429 "Exp.Trial" 224 "[[265,320,\"NA\",\"NA\"]]" 224 "Moder" "black" "degradated" "underlined" "97" 0
+1120.88 2.061 20204925 "Exp.Trial" 225 "[[438,493,\"NA\",\"NA\"]]" 225 "Hagel" "blue" "non-degradated" "not underlined" "227" 0
+1128.336 1.758 20212381 "Exp.Trial" 226 "[[228,283,\"NA\",\"NA\"]]" 226 "Stern" "blue" "non-degradated" "not underlined" "237" NA
+1132.81 2.039 20216855 "Exp.Trial" 227 "[[376,431,\"NA\",\"NA\"]]" 227 "Rispe" "blue" "degradated" "underlined" "275" NA
+1136.422 1.599 20220467 "Exp.Trial" 228 "[[327,382,\"NA\",\"NA\"]]" 228 "Rippe" "black" "non-degradated" "not underlined" "56" NA
+1140.61 1.813 20224655 "Exp.Trial" 229 "[[228,283,\"NA\",\"NA\"]]" 229 "Kokon" "black" "non-degradated" "not underlined" "52" NA
+1144.759 2.019 20228804 "Exp.Trial" 230 "[[302,357,\"NA\",\"NA\"]]" 230 "Teint" "blue" "non-degradated" "not underlined" "229" 0
+1153.032 2.029 20237077 "Exp.Trial" 231 "[[290,345,\"NA\",\"NA\"]]" 231 "Armee" "blue" "degradated" "not underlined" "284" NA
+1156.714 2.423 20240759 "Exp.Trial" 232 "[[228,283,\"NA\",\"NA\"]]" 232 "Orbit" "blue" "degradated" "not underlined" "287" 0
+1169.022 1.961 20253067 "Exp.Trial" 233 "[[352,407,\"NA\",\"NA\"]]" 233 "Fötus" "blue" "degradated" "not underlined" "289" NA
+1174 1.901 20258045 "Exp.Trial" 234 "[[290,345,\"NA\",\"NA\"]]" 234 "Motiv" "black" "non-degradated" "underlined" "13" NA
+1177.572 2.035 20261617 "Exp.Trial" 235 "[[314,369,\"NA\",\"NA\"]]" 235 "Boxer" "blue" "degradated" "not underlined" "313" NA
+1181.993 2.229 20266038 "Exp.Trial" 236 "[[525,580,\"NA\",\"NA\"]]" 236 "Polka" "black" "degradated" "underlined" "102" NA
+1186.09 2.609 20270135 "Exp.Trial" 237 "[[364,419,\"NA\",\"NA\"]]" 237 "Axiom" "black" "non-degradated" "underlined" "27" NA
+1190.442 1.716 20274487 "Exp.Trial" 238 "[[252,307,\"NA\",\"NA\"]]" 238 "Belag" "blue" "non-degradated" "not underlined" "218" NA
+1193.842 2.077 20277887 "Exp.Trial" 239 "[[401,456,\"NA\",\"NA\"]]" 239 "Lehne" "blue" "non-degradated" "not underlined" "224" NA
+1197.838 1.983 20281883 "Exp.Trial" 240 "[[476,531,\"NA\",\"NA\"]]" 240 "Lunge" "black" "degradated" "underlined" "81" NA
+1201.409 1.699 20285454 "Exp.Trial" 241 "[[290,345,\"NA\",\"NA\"]]" 241 "Raser" "black" "non-degradated" "underlined" "3" 0
+1208.447 2.497 20292492 "Exp.Trial" 242 "[[575,630,\"NA\",\"NA\"]]" 242 "Blitz" "black" "degradated" "not underlined" "121" NA
+1212.508 1.531 20296553 "Exp.Trial" 243 "[[228,283,\"NA\",\"NA\"]]" 243 "Mango" "blue" "degradated" "not underlined" "286" NA
+1218.444 2.4 20302489 "Exp.Trial" 244 "[[426,481,\"NA\",\"NA\"]]" 244 "Müsli" "blue" "non-degradated" "not underlined" "210" NA
+1223.477 3.024 20307522 "Exp.Trial" 245 "[[376,431,\"NA\",\"NA\"]]" 245 "Ärmel" "black" "non-degradated" "not underlined" "76" NA
+1228.746 1.863 20312791 "Exp.Trial" 246 "[[228,283,\"NA\",\"NA\"]]" 246 "Kleid" "blue" "degradated" "not underlined" "281" NA
+1233.214 1.421 20317259 "Exp.Trial" 247 "[[252,307,\"NA\",\"NA\"]]" 247 "Minze" "blue" "degradated" "not underlined" "303" NA
+1236.586 1.74 20320631 "Exp.Trial" 248 "[[252,307,\"NA\",\"NA\"]]" 248 "Wärme" "black" "non-degradated" "underlined" "21" 0
+1244.287 2.459 20328332 "Exp.Trial" 249 "[[600,655,\"NA\",\"NA\"]]" 249 "Leere" "blue" "degradated" "not underlined" "290" NA
+1248.344 1.42 20332389 "Exp.Trial" 250 "[[352,407,\"NA\",\"NA\"]]" 250 "Paket" "black" "non-degradated" "not underlined" "77" NA
+1252.266 2.42 20336311 "Exp.Trial" 251 "[[302,357,\"NA\",\"NA\"]]" 251 "Viola" "blue" "non-degradated" "not underlined" "217" NA
+1256.407 2.215 20340452 "Exp.Trial" 252 "[[538,593,\"NA\",\"NA\"]]" 252 "Gramm" "blue" "degradated" "underlined" "279" NA
+1260.616 3.575 20344661 "Exp.Trial" 253 "[[748,803,\"NA\",\"NA\"]]" 253 "Sühne" "black" "non-degradated" "underlined" "18" NA
+1265.828 2.131 20349873 "Exp.Trial" 254 "[[414,469,\"NA\",\"NA\"]]" 254 "Sippe" "blue" "non-degradated" "underlined" "188" NA
+1270.155 2.886 20354200 "Exp.Trial" 255 "[[426,481,\"NA\",\"NA\"]]" 255 "Liste" "black" "degradated" "underlined" "99" 0
+1280.744 1.65 20364789 "Exp.Trial" 256 "[[414,469,\"NA\",\"NA\"]]" 256 "Stamm" "blue" "degradated" "underlined" "274" NA
+1284.354 1.844 20368399 "Exp.Trial" 257 "[[339,394,\"NA\",\"NA\"]]" 257 "Ratte" "black" "non-degradated" "not underlined" "49" NA
+1287.726 2.181 20371771 "Exp.Trial" 258 "[[240,295,\"NA\",\"NA\"]]" 258 "Matte" "black" "degradated" "not underlined" "143" 0
+1295.175 1.566 20379220 "Exp.Trial" 259 "[[327,382,\"NA\",\"NA\"]]" 259 "Beule" "blue" "degradated" "underlined" "266" NA
+1298.357 2.473 20382402 "Exp.Trial" 260 "[[364,419,\"NA\",\"NA\"]]" 260 "Griff" "blue" "non-degradated" "not underlined" "225" NA
+1302.887 1.525 20386932 "Exp.Trial" 261 "[[252,307,\"NA\",\"NA\"]]" 261 "Abend" "black" "non-degradated" "underlined" "7" 0
+1309.421 2.375 20393466 "Exp.Trial" 262 "[[339,394,\"NA\",\"NA\"]]" 262 "Malve" "blue" "degradated" "underlined" "241" NA
+1313.47 2.475 20397515 "Exp.Trial" 263 "[[277,332,\"NA\",\"NA\"]]" 263 "Kluft" "blue" "degradated" "underlined" "258" NA
+1318.689 1.751 20402734 "Exp.Trial" 264 "[[438,493,\"NA\",\"NA\"]]" 264 "Musik" "blue" "non-degradated" "underlined" "200" NA
+1322.75 1.786 20406795 "Exp.Trial" 265 "[[277,332,\"NA\",\"NA\"]]" 265 "Slawe" "blue" "non-degradated" "underlined" "171" NA
+1326.462 2.514 20410507 "Exp.Trial" 266 "[[277,332,\"NA\",\"NA\"]]" 266 "Würze" "blue" "degradated" "underlined" "263" NA
+1330.576 2.317 20414621 "Exp.Trial" 267 "[[364,419,\"NA\",\"NA\"]]" 267 "Spreu" "blue" "non-degradated" "underlined" "161" NA
+1334.885 2.119 20418930 "Exp.Trial" 268 "[[228,283,\"NA\",\"NA\"]]" 268 "Lager" "black" "degradated" "not underlined" "145" NA
+1339.16 2.072 20423205 "Exp.Trial" 269 "[[252,307,\"NA\",\"NA\"]]" 269 "Madam" "black" "non-degradated" "underlined" "4" 0
+1347.823 2.677 20431868 "Exp.Trial" 270 "[[215,270,\"NA\",\"NA\"]]" 270 "Hüter" "black" "non-degradated" "not underlined" "66" NA
+1352.089 2.452 20436134 "Exp.Trial" 271 "[[215,270,\"NA\",\"NA\"]]" 271 "Union" "black" "non-degradated" "not underlined" "46" NA
+1356.141 1.775 20440186 "Exp.Trial" 272 "[[389,444,\"NA\",\"NA\"]]" 272 "Waffe" "blue" "non-degradated" "underlined" "174" NA
+1360.422 1.95 20444467 "Exp.Trial" 273 "[[401,456,\"NA\",\"NA\"]]" 273 "Mähre" "blue" "non-degradated" "underlined" "167" NA
+1364.108 3.129 20448153 "Exp.Trial" 274 "[[265,320,\"NA\",\"NA\"]]" 274 "Dekan" "black" "non-degradated" "underlined" "11" NA
+1368.906 2.06 20452951 "Exp.Trial" 275 "[[314,369,\"NA\",\"NA\"]]" 275 "Pedal" "blue" "non-degradated" "not underlined" "214" NA
+1373.686 2.218 20457731 "Exp.Trial" 276 "[[265,320,\"NA\",\"NA\"]]" 276 "Prinz" "blue" "non-degradated" "underlined" "166" NA
+1378.87 1.25 20462915 "Exp.Trial" 277 "[[314,369,\"NA\",\"NA\"]]" 277 "Twist" "black" "non-degradated" "not underlined" "79" NA
+1381.684 2.046 20465729 "Exp.Trial" 278 "[[500,555,\"NA\",\"NA\"]]" 278 "Lauch" "blue" "non-degradated" "underlined" "197" 0
+1390.042 2.192 20474087 "Exp.Trial" 279 "[[277,332,\"NA\",\"NA\"]]" 279 "Zeile" "black" "degradated" "underlined" "88" NA
+1394.483 2.178 20478528 "Exp.Trial" 280 "[[314,369,\"NA\",\"NA\"]]" 280 "Kugel" "blue" "non-degradated" "underlined" "186" NA
+1398.718 2.418 20482763 "Exp.Trial" 281 "[[513,568,\"NA\",\"NA\"]]" 281 "Quint" "blue" "degradated" "underlined" "265" NA
+1402.729 3.626 20486774 "Exp.Trial" 282 "[[550,605,\"NA\",\"NA\"]]" 282 "Quast" "black" "non-degradated" "not underlined" "61" NA
+1407.999 1.632 20492044 "Exp.Trial" 283 "[[228,283,\"NA\",\"NA\"]]" 283 "Ritze" "blue" "degradated" "not underlined" "318" NA
+1411.696 1.814 20495741 "Exp.Trial" 284 "[[401,456,\"NA\",\"NA\"]]" 284 "Klaps" "black" "non-degradated" "not underlined" "70" NA
+1415.167 1.911 20499212 "Exp.Trial" 285 "[[302,357,\"NA\",\"NA\"]]" 285 "Delta" "black" "degradated" "not underlined" "131" NA
+1418.985 1.76 20503030 "Exp.Trial" 286 "[[376,431,\"NA\",\"NA\"]]" 286 "These" "black" "non-degradated" "not underlined" "53" NA
+1422.676 2.005 20506721 "Exp.Trial" 287 "[[265,320,\"NA\",\"NA\"]]" 287 "Aktie" "blue" "degradated" "underlined" "248" NA
+1426.732 2.025 20510777 "Exp.Trial" 288 "[[426,481,\"NA\",\"NA\"]]" 288 "Troll" "black" "non-degradated" "not underlined" "57" NA
+1430.463 1.817 20514508 "Exp.Trial" 289 "[[302,357,\"NA\",\"NA\"]]" 289 "Anbau" "blue" "degradated" "underlined" "250" NA
+1433.781 1.986 20517826 "Exp.Trial" 290 "[[277,332,\"NA\",\"NA\"]]" 290 "Wüste" "blue" "degradated" "underlined" "261" NA
+1437.844 2.575 20521889 "Exp.Trial" 291 "[[476,531,\"NA\",\"NA\"]]" 291 "Gusto" "blue" "non-degradated" "not underlined" "220" 0
+1447.761 2.603 20531806 "Exp.Trial" 292 "[[327,382,\"NA\",\"NA\"]]" 292 "Regie" "black" "degradated" "underlined" "116" NA
+1452.017 2.501 20536062 "Exp.Trial" 293 "[[302,357,\"NA\",\"NA\"]]" 293 "Sigma" "blue" "non-degradated" "not underlined" "234" 0
+1460.879 2.218 20544924 "Exp.Trial" 294 "[[240,295,\"NA\",\"NA\"]]" 294 "Strom" "blue" "non-degradated" "underlined" "163" NA
+1464.643 1.669 20548688 "Exp.Trial" 295 "[[265,320,\"NA\",\"NA\"]]" 295 "Summe" "black" "degradated" "not underlined" "123" NA
+1467.875 2.304 20551920 "Exp.Trial" 296 "[[277,332,\"NA\",\"NA\"]]" 296 "Kuhle" "black" "non-degradated" "not underlined" "45" 0
+1475.523 1.514 20559568 "Exp.Trial" 297 "[[240,295,\"NA\",\"NA\"]]" 297 "Zecke" "blue" "non-degradated" "underlined" "170" NA
+1478.563 1.739 20562608 "Exp.Trial" 298 "[[228,283,\"NA\",\"NA\"]]" 298 "Laken" "blue" "degradated" "not underlined" "298" NA
+1482.499 2.895 20566544 "Exp.Trial" 299 "[[339,394,\"NA\",\"NA\"]]" 299 "Fauna" "black" "non-degradated" "not underlined" "68" NA
+1487.817 2.372 20571862 "Exp.Trial" 300 "[[228,283,\"NA\",\"NA\"]]" 300 "Ahorn" "blue" "non-degradated" "underlined" "193" NA
+1491.754 2.52 20575799 "Exp.Trial" 301 "[[488,543,\"NA\",\"NA\"]]" 301 "Tisch" "black" "non-degradated" "not underlined" "62" NA
+1496.805 1.893 20580850 "Exp.Trial" 302 "[[352,407,\"NA\",\"NA\"]]" 302 "Dogma" "black" "non-degradated" "not underlined" "67" NA
+1500.21 1.724 20584255 "Exp.Trial" 303 "[[265,320,\"NA\",\"NA\"]]" 303 "Zeder" "blue" "degradated" "not underlined" "304" NA
+1503.351 2.564 20587396 "Exp.Trial" 304 "[[376,431,\"NA\",\"NA\"]]" 304 "Zitat" "blue" "degradated" "not underlined" "311" NA
+1508.376 2.236 20592421 "Exp.Trial" 305 "[[426,481,\"NA\",\"NA\"]]" 305 "Juwel" "black" "degradated" "not underlined" "142" NA
+1512.777 2.139 20596822 "Exp.Trial" 306 "[[252,307,\"NA\",\"NA\"]]" 306 "Achse" "blue" "non-degradated" "underlined" "172" NA
+1517.025 2.407 20601070 "Exp.Trial" 307 "[[277,332,\"NA\",\"NA\"]]" 307 "Kerze" "blue" "non-degradated" "underlined" "165" NA
+1521.585 1.979 20605630 "Exp.Trial" 308 "[[240,295,\"NA\",\"NA\"]]" 308 "Stube" "blue" "degradated" "underlined" "273" NA
+1525.442 1.801 20609487 "Exp.Trial" 309 "[[302,357,\"NA\",\"NA\"]]" 309 "Treff" "blue" "degradated" "underlined" "270" NA
+1528.762 1.664 20612807 "Exp.Trial" 310 "[[451,506,\"NA\",\"NA\"]]" 310 "Äther" "black" "non-degradated" "underlined" "34" NA
+1532.737 1.736 20616782 "Exp.Trial" 311 "[[228,283,\"NA\",\"NA\"]]" 311 "Henne" "blue" "degradated" "not underlined" "320" NA
+1536.208 2.7 20620253 "Exp.Trial" 312 "[[240,295,\"NA\",\"NA\"]]" 312 "Zinke" "blue" "non-degradated" "underlined" "168" NA
+1540.504 2.62 20624549 "Exp.Trial" 313 "[[339,394,\"NA\",\"NA\"]]" 313 "Pulle" "black" "non-degradated" "not underlined" "48" NA
+1544.573 1.84 20628618 "Exp.Trial" 314 "[[277,332,\"NA\",\"NA\"]]" 314 "Enkel" "blue" "non-degradated" "not underlined" "205" NA
+1549.053 2.2 20633098 "Exp.Trial" 315 "[[302,357,\"NA\",\"NA\"]]" 315 "Mokka" "blue" "degradated" "not underlined" "312" NA
+1552.878 1.543 20636923 "Exp.Trial" 316 "[[290,345,\"NA\",\"NA\"]]" 316 "Elite" "blue" "non-degradated" "not underlined" "233" 0
+1560.758 2.283 20644803 "Exp.Trial" 317 "[[376,431,\"NA\",\"NA\"]]" 317 "Werft" "black" "degradated" "underlined" "87" NA
+1564.787 1.872 20648832 "Exp.Trial" 318 "[[265,320,\"NA\",\"NA\"]]" 318 "Nonne" "blue" "non-degradated" "underlined" "198" NA
+1568.259 1.909 20652304 "Exp.Trial" 319 "[[265,320,\"NA\",\"NA\"]]" 319 "Panda" "black" "non-degradated" "underlined" "31" NA
+1572.501 1.897 20656546 "Exp.Trial" 320 "[[389,444,\"NA\",\"NA\"]]" 320 "Logik" "black" "degradated" "not underlined" "144" NA

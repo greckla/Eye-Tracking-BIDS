@@ -1,9 +1,3 @@
 *.Rproj.user
 *.Rhistory
-*.RData
-*.Ruserdata
-*.knit.md
 .Rproj.user
-*backup.*
-*.nb.html
-/irrelevant

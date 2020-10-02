@@ -1,0 +1,41 @@
+Variable,Entry
+Task,PSC_train
+StartMessage,SENTENCESTART
+EndMessage,SENTENCESTOP
+EventIdentifier,EFIX
+PupilPositionType,raw pupil position on screen
+RawSamples,recorded
+IncludedEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
+DetectionAlgorithm,SR-Research
+EventReferenceFrame,2D
+InstitutionName,Goethe-University of Frankfurt; Department of Psychology
+InstitutionAddress,Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany
+Manufacturer,SR-Research
+ManufacturerModelName,EYELINK II CL v4.56 Aug 18 2010
+SoftwareVersions,SREB1.10.1630 WIN32 LID:F2AE011 Mod:2017.04.21 15:19 CEST
+TaskDescription,Sentence reading
+Instructions,Read sentences as you would read a book or a newspaper
+CalibrationType,
+CalibrationPosition,
+CalibrationDistance,60cm
+MaximalCalibrationError,
+AverageCalibrationError,
+ScreenSize,38.6 x 29 cm (19 inches)
+ScreenResolution,1024 x 768 px
+EyeCameraSetting,
+FeatureDetectionSettings,
+Gaze-Mapping-Settings,
+DetectionAlgorithmSettings,
+RawDataFilters,
+ImageCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
+Eye-CameraCoordinates,
+HeadEye-CenteredCoordinates,
+KeyPressMessage,ANSWER
+Name,PSC Pre-Post Diagnostic
+BIDSVersion,1.0
+License,CC-BY 4.0 International license
+Authors,"[""Klara Gregorova"", ""Benjamin Gagl""]"
+Aknowledgements,
+Funding,
+ReferenceAndLinks,
+DatasetDOI,

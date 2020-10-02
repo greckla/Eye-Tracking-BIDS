@@ -1,0 +1,264 @@
+---
+title: "Preprocess detected fixations - based on BIDS structure" 
+subtitle: "Free viewing faces"
+author: "Klara Gregorova"
+date: "22.09.2020"
+output:
+  pdf_document: default
+---
+
+```{r}
+library(jsonlite) # package required for reading *.json files
+```
+
+```{r}
+# set path to BIDS folder
+path = "./hyperlinks_raw_data_BIDS"
+
+# list all subject directories
+subjects = list.dirs(path, recursive = T)
+subjects = subjects[grepl(pattern="eyetrack", x = subjects)]
+
+# get full file names for *.asc, *.json and *events.tsv files
+input_file_pathways = list.files(subjects, pattern = "*.asc$",full.names = T)
+input_event_pathways = list.files(subjects, pattern = "*events.tsv$",full.names = T)
+input_json_pathways = list.files(subjects, pattern = "*.json$",full.names = T)
+```
+
+# EFIX data from all participants to a dataframe, define AOIs
+```{r}
+dat_fix_all = data.frame() # initiate the dataframe for the preprocessed fixations
+
+# loop across the *.asc files which should be preprocessed
+for (input_file in 1:length(input_file_pathways)){
+  tmp_file = readLines(input_file_pathways[input_file]) # read the *.asc file
+  # extract the file name
+  file_name = strsplit(input_file_pathways[input_file], split = "eyetrack/")[[1]][2] 
+  # extract the individual code by subject and experimental session
+  code = strsplit(file_name, split = "_task-freeviewfaces_eyetrack")[[1]][1] 
+  # extract information about the session and the id from the ind. code
+  sub = strsplit(strsplit(code, split = "_") [[1]][1], split = "-")[[1]][2]  
+  acq = strsplit(strsplit(code, split = "_") [[1]][2], split = "-")[[1]][2]
+  
+  # grap all rows including EFIX 
+  # ->automatic fixation detection by Eyelink, pointing to end of the fixation
+  # Friedman et al. (2018)
+  # and unlist them to a dataframe
+  dat_fix_list = strsplit(tmp_file[grepl("EFIX",tmp_file)],split = "\t") 
+  dat_fix = data.frame(matrix(unlist(dat_fix_list), 
+                               nrow = length(dat_fix_list), byrow=T),
+                        stringsAsFactors = FALSE)
+  colnames(dat_fix)= c("X1", "efix", "duration", "x", "y", "pupilsize")
+  
+  # add vectors indicating the subject code and the session
+  dat_fix$sub = sub
+  #dat_fix$session = session
+  dat_fix$acq = acq
+
+  # for each fixation extract the tracked eye (R/L) and the start of the fixation
+  for (fixation in 1:length(dat_fix$sub)){
+    # information about the tracked eye
+    dat_fix$eye[fixation] = strsplit(dat_fix$X1[fixation], split = " ")[[1]][2] 
+    # start of the fixation (point in time)
+    dat_fix$sfix[fixation] = strsplit(dat_fix$X1[fixation], split = " ")[[1]][5] 
+    }
+    
+    # set column types
+    dat_fix$sfix=as.numeric(dat_fix$sfix)
+    dat_fix$efix=as.numeric(dat_fix$efix)
+    dat_fix$duration=as.numeric(dat_fix$duration)
+    dat_fix$x=as.numeric(dat_fix$x)
+    dat_fix$y=as.numeric(dat_fix$y)
+
+  ###### EVENT FILE #########
+  # read the corresponding individual dataset with event characteristics
+  dat_events = read.table(input_event_pathways[input_file], header=TRUE, 
+                          colClasses = "character")
+  nr_events = length(dat_events$onset)
+  
+  dat_events$onset = as.numeric(dat_events$onset)
+  dat_events$duration = as.numeric(dat_events$duration)
+  dat_events$sample = as.numeric(dat_events$sample)
+  
+  # relativize the start and end of fixations on the onset of the first event
+  # convert to seconds
+  dat_fix$fix_start = (dat_fix$sfix - dat_events$sample[1])/1000 
+  dat_fix$fix_end = dat_fix$fix_start + (dat_fix$duration/1000) 
+
+  ###### ASSIGN EVENT CHARACTERISTICS, e.g. TRIAL NUMBER ########## 
+  # to assign a fixation to an event, 
+  # the fixation must fall into the time window of a specific event:
+    # the start time of the fixation should be greater or equal to the start time 
+    # of the event and lower than the end time of the event
+    # OR
+    # the end time of the fixation should be greater than the start point 
+    # of the event and lower than the end time of the event
+  
+  # initiate columns with event characteristics 
+  # --> specify for your paradigm 
+  # minimum should be the event number (event_nr)
+  dat_fix$trial_type = NA
+  dat_fix$event_nr = NA
+  dat_fix$trial = NA
+  dat_fix$target_word = NA
+  dat_fix$color = NA
+  dat_fix$mask = NA
+  dat_fix$sentenceNr = NA
+  dat_fix$response = NA
+  
+  # identify the corresponding column numbers
+  rel_columns_dfix = match(c("trial_type","event_nr",
+          "trial", "target_word", "color",
+          "mask", "sentenceNr", "response"),names(dat_fix))
+  
+  rel_columns_devents = match(c("trial_type","event_nr",
+          "trial", "target_word", "color",
+          "mask", "sentenceNr", "response"),names(dat_events))
+  
+  # matching based on the fixation starts/ends, resp. event onset/offset
+  for (event in c(1:nr_events)){ 
+    dat_fix[dat_fix$fix_start >= dat_events$onset[event] &
+              dat_fix$fix_start < 
+              (dat_events$onset[event]+dat_events$duration[event])|
+              dat_fix$fix_end >= dat_events$onset[event] &
+              dat_fix$fix_end <
+              (dat_events$onset[event]+dat_events$duration[event]),
+            rel_columns_dfix] =
+      dat_events[event, rel_columns_devents]
+    }
+
+  # for fixations falling into the time window of the trial:
+    # assign the ONSET and the OFFSET of the events 
+  for (event in c(1:nr_events)){
+    dat_fix$event_onset[dat_fix$event_nr==event] = dat_events$onset[event]
+    dat_fix$event_offset[dat_fix$event_nr==event] = 
+      (dat_events$onset[event] + dat_events$duration[event])
+  }
+
+  ##### CORRECTION of the FIXATION DURATION ############## 
+  # in case the fixation exceeds the time window of the event (exp. trial) 
+  # --> shorten fixations to the duration within the event 
+  # sfix_beforeOnset: overlap to the time window before the event (i.e., trial)
+  # efix_afterOffset: overlap to the time window after the event (i.e., trial)
+  # withinEvent: start and end of the fixation within the event (i.e., trial)
+  for(fixation in 1:length(dat_fix$fix_start)){
+    if (!is.na(dat_fix$event_onset[fixation]) & 
+        dat_fix$fix_start[fixation] < dat_fix$event_onset[fixation]){
+          dat_fix$duration_corr[fixation] = 
+            dat_fix$duration[fixation] - 
+            ((dat_fix$event_onset[fixation]- dat_fix$fix_start[fixation])*1000)
+          dat_fix$fixation_type[fixation] = "sfix_beforeOnset"
+        }
+    else if (!is.na(dat_fix$event_offset[fixation]) & 
+             dat_fix$fix_end[fixation] > dat_fix$event_offset[fixation]){
+          dat_fix$duration_corr[fixation] = 
+              dat_fix$duration[fixation] - 
+              ((dat_fix$fix_end[fixation] - dat_fix$event_offset[fixation])*1000)
+          dat_fix$fixation_type[fixation] = "efix_afterOffset"
+        }
+    else{
+      dat_fix$duration_corr[fixation]=dat_fix$duration[fixation]
+      dat_fix$fixation_type[fixation]=NA}
+  }
+  
+  dat_fix$fixation_type[is.na(dat_fix$fixation_type) 
+                         & !is.na(dat_fix$event_nr)]="withinEvent"
+  
+  ###### add CALIBRATION INFORMATION to each fixation #######
+  # first read the dataframe from the *.json file
+  dat_cal = data.frame(fromJSON(input_json_pathways[input_file])$CalibrationList,
+                       stringsAsFactors = FALSE)
+  colnames(dat_cal) = c("calibration", "eye", "error_max", "error_avg", "time_cal")  
+  dat_cal$error_max = as.numeric(dat_cal$error_max) 
+  dat_cal$error_avg = as.numeric(dat_cal$error_avg) 
+  dat_cal$time_cal = as.numeric(dat_cal$time_cal) 
+  
+  dat_cal$eye[dat_cal$eye == "LEFT"] = "L"
+  dat_cal$eye[dat_cal$eye == "RIGHT"] = "R"
+  
+  # use the average calibration error
+  # assign the calibration value which time is closest 
+  # but smaller than the time point of the fixation and 
+  # which corresponds to the tracked eye
+  for(fixation in 1:length(dat_fix$fix_start)){
+    dat_fix$cal[fixation] = 
+      dat_cal$error_avg[
+        dat_cal$time_cal ==
+          max(dat_cal$time_cal[ 
+            dat_cal$time_cal<dat_fix$fix_start[fixation] &
+              dat_cal$eye == dat_fix$eye[fixation]])
+        & dat_cal$eye == dat_fix$eye[fixation]]
+    }
+
+  ############ assign fixated AOIs ################## 
+  # --> interval of x AND y coordinates has to be met
+  # coordinates of the AOIs stored in the *event.tsv file
+  
+  # loop across all events and 
+  # store AOIs for the specific event and its characteristics
+  for (event in c(1:nr_events)){
+      # skip events without aois
+    if(!is.na(dat_events$aoi[event])|dat_events$aoi[event]!=""){
+    aoi = fromJSON(dat_events$aoi[event])
+    
+    aoisEvent = data.frame(aoi)
+    aoi_count = length(aoisEvent$X1)
+    
+    # loop across all aois in the specific event (i.e., trial)
+    # before, you need counter asigned to the fixations ! (e.g. number of the trial)
+    
+    # check which fixations fall into the time window of the event &
+    # at the same time within the AOI borders.
+    # assign AOI characteristics for fixations falling into the AOI.
+    for(aoi in c(1:aoi_count)){
+    dat_fix$aoi_nr[
+      aoisEvent[aoi,1]<=dat_fix$x & dat_fix$x<=aoisEvent[aoi,2] &
+           # aoisEvent[aoi,3]<=dat_fix$y & dat_fix$y<=aoisEvent[aoi,4] &
+            dat_fix$event_nr == event] = aoi
+   
+    }
+    }
+    }
+
+# bind the individual dataset to the dataframe with data from all participants  
+dat_fix_all = rbind(dat_fix_all, dat_fix)
+  
+}
+```
+
+# Clean the dataframe for usable columns only
+```{r}
+dat_fix_cleaned = dat_fix_all
+
+# delete the raw start and end time (we use time relative to the first message) 
+dat_fix_cleaned$efix = NULL
+dat_fix_cleaned$sfix = NULL
+# delete the first column including information about 
+# the tracked eye and start time of the fixation
+dat_fix_cleaned$X1 = NULL
+# as we did not concerned relevant set up for valid pupilsize measures, 
+# the pupilsize turns not to be usable 
+dat_fix_cleaned$pupilsize = NULL
+# set data types
+dat_fix_cleaned$acq = as.factor(dat_fix_cleaned$acq)
+dat_fix_cleaned$eye = as.factor(dat_fix_cleaned$eye)
+# We can also remove all data not recorded within events
+dat_fix_cleaned = dat_fix_cleaned[!is.na(dat_fix_cleaned$event_nr),]
+```
+
+# Write dataframe with preprocessed data
+```{r}
+# define output path
+outpath =  "./preprocessed_fixations/"
+
+# write *.csv with cleaned data
+write.csv(dat_fix_cleaned, paste0(outpath, "dat_fix_hyperlinks.csv"), row.names = FALSE, quote=F)
+```
+
+```{r}
+head(dat_fix_cleaned)
+summary(dat_fix_cleaned)
+dat_fix_cleaned$sub = as.factor(dat_fix_cleaned$sub)
+levels(dat_fix_cleaned$sub)
+```
+

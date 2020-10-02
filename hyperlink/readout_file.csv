@@ -1,0 +1,41 @@
+Variable,Entry
+Task,hyperlinks
+StartMessage,MASKSCREEN_START
+EndMessage,TRIAL_RESULT
+EventIdentifier,EFIX
+PupilPositionType,raw pupil position on screen
+RawSamples,recorded
+IncludedEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
+DetectionAlgorithm,SR-Research
+EventReferenceFrame,2D
+InstitutionName,University of Salzburg; Department of Psychology
+InstitutionAddress,Hellbrunnerstrasse 34; 5020 Salzburg; Austria
+Manufacturer,SR-Research
+ManufacturerModelName,EYELINK II CL v4.51 Mar 13 2010
+SoftwareVersions,SREB1.10.165 WIN32 LID:5C0F381A Mod:2013.11.08 08:51 MEZ
+TaskDescription,Silent reading with catch trials including a invisible boundary manipulation
+Instructions,Read the following sentences as if you were reading a book or a newspaper.
+CalibrationType,
+CalibrationPosition,
+CalibrationDistance,52cm
+MaximalCalibrationError,
+AverageCalibrationError,
+ScreenSize,
+ScreenResolution,1024 x 768 px
+EyeCameraSetting,
+FeatureDetectionSettings,
+Gaze-Mapping-Settings,
+DetectionAlgorithmSettings,
+RawDataFilters,
+ImageCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
+Eye-CameraCoordinates,
+HeadEye-CenteredCoordinates,
+KeyPressMessage,KEYPRESS
+Name,Reading Hypertext
+BIDSVersion,1.0
+License,CC-BY 4.0 International license
+Authors,"[""Benjamin Gagl""]"
+Aknowledgements,"I want to thank Arturo Hernandez for helpful discussions and comments on an earlier version of the manuscript. I also want to thank Susanne Eisenhauer, Kirsten Hilger and Edvard Heikel for comments on an earlier version and Agnes Altmanninger, Pia Schweitzer and Eva Daspelgruber for helping with the data acquisition. Finally, I want to thank Florian Hutzler for letting me use his laboratory and Stefan Hawelka since part of the current software used in the project was scripted in collaboration for previous studies."
+Funding,"This research was supported by the Goethe University Frankfurt “Nachwuchswissenschafter im Fokus –Förderlinie A”. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript."
+ReferenceAndLinks,"[""Gagl B. (2016) Blue hypertext is a good design decision: no perceptual disadvantage in reading and successful highlighting of relevant information. PeerJ 4:e2467 https://doi.org/10.7717/peerj.2467""]"
+DatasetDOI,"Gagl, B. (2016, April 17). Reading Hypertext. Retrieved from https://osf.io/8c57w/."

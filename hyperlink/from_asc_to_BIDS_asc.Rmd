@@ -1,0 +1,421 @@
+---
+title: "Eye Tracking Preprocessing - From .asc to BIDS" 
+subtitle: "Reading Hyperlinks"
+author: "Klara Gregorova & Benjamin Gagl"
+date: "22.09.2020"
+output:
+  pdf_document: default
+---
+The converter is Eyelink specific. For other manufacturers you will probably need to adapt the script.
+
+before running the script
+ - fill in the readout file 
+   from there, entries are easily accessable in several steps of the conversion.
+ - save all raw .asc files into a folder called <task>_raw_data
+ 
+ 
+```{r}
+require(jsonlite)
+require(car)
+```
+
+
+```{r}
+# read the filled readout file and transform it to a usable form
+readout_file = read.csv("./readout_file.csv", header = TRUE)
+readout = data.frame(row.names = readout_file$Variable, Entry = readout_file$Entry)
+readout = data.frame(t(readout),stringsAsFactors = FALSE)
+
+# set path for the input and output folders
+input_folder = paste0("./",readout$Task,"_raw_data/")
+output_folder = paste0("./",readout$Task,"_raw_data_BIDS/") 
+
+# list all .asc files in the input folder with raw data 
+input_file_names = list.files(input_folder, pattern= "*.asc$")
+
+# function for creation of output folders in case they do not exist.
+cb_cd = function(path){
+  if(dir.exists(path)){
+    print(paste0("Folder existis: ",path))
+  }else{
+    dir.create(path, recursive = T)
+    print(paste0("Create: ",path))
+  }
+}
+
+#initiate vector with participant codes
+participant_id = NULL
+
+# loop over all asc files in raw data
+for (file in 1:length(input_file_names)){
+  
+  # extract from the [file] *.asc file: 
+  # the file name, subject code (sub), and session (ses) 
+  filename = strsplit(input_file_names[file],split=".asc")[[1]] [1]
+  sub = strsplit(filename,split="_")[[1]] [1]
+  acq = strsplit(filename,split="_")[[1]] [2]
+  
+  # add participant code to the "participant_id" vector (when not already happened...)
+  # this vector should include all participant codes in the end
+  # --> intended for the "participants.tsv" file
+  if(sub%in%participant_id){
+  }else{participant_id = c(participant_id, sub)}
+  
+  # paste the path to the subfolder */eyetrack 
+  # create this directory with the cb_cd function
+  indi_folder_path = paste0(output_folder,"sub-",sub,"/eyetrack")
+  cb_cd(indi_folder_path)
+  
+  # copy the [file] *.asc file into the eyetrack folder 
+  # consider the file name!
+  file.copy( paste0(input_folder,input_file_names[file])
+            ,paste0(indi_folder_path,"/sub-",sub,
+                    #"_ses-",ses,
+                    "_acq-",acq,
+                    "_task-",readout$Task,"_eyetrack.asc")
+            )
+  
+  # read the [file]*.asc file from the output folder
+  # -> relevant information should be read out and stored in the meta-data
+  tmp_file = readLines(paste0(indi_folder_path,"/sub-",sub,
+                             #"_ses-",ses,
+                             "_acq-",acq,
+                             "_task-",readout$Task,"_eyetrack.asc"),
+                       encoding = "UTF-8")
+  
+  ##############################################
+  ######### CALIBRATION INFORMAION #############
+
+  # grap all rows with the message !CAL VALIDATION
+  # aborted validations excluded 
+  # element separator set to space (split = " ")
+  # store the new list as tmp_file_cal
+  tmp_file_cal = strsplit(tmp_file[grepl("!CAL VALIDATION",tmp_file)&
+                                     !grepl("ABORTED", tmp_file)],split = " ")
+  
+  # loop across all calibration messages in tmp_file_cal
+  # extract information: calibration type, eye, max. and averaged error
+  # store these parameters in vectors
+  
+  calibration = NULL
+  eye = NULL
+  error_max = NULL
+  error_avg = NULL
+  time_cal = NULL
+  
+  for (cal_nr in 1:length(tmp_file_cal)){
+    
+    # calibrations on the right eye (except of the first one - else if):
+    # add information to the already initiated vectors
+    if(tmp_file_cal[[cal_nr]][6]=="RIGHT"){
+      calibration[cal_nr] = tmp_file_cal[[cal_nr]][4]
+      eye[cal_nr] = tmp_file_cal[[cal_nr]][6]
+      error_max[cal_nr] = tmp_file_cal[[cal_nr]][11]
+      error_avg[cal_nr] = tmp_file_cal[[cal_nr]][9]
+      time_cal[cal_nr] = as.numeric(strsplit(tmp_file_cal[[cal_nr]],
+                                             split="\t")[[1]][2], split=" ")
+      }
+    
+    # calibrations on the left eye
+    # add information to the already initiated vectors    
+    else{
+      calibration[cal_nr] = tmp_file_cal[[cal_nr]][4]
+      eye[cal_nr] = tmp_file_cal[[cal_nr]][6]
+      error_max[cal_nr] = tmp_file_cal[[cal_nr]][12]
+      error_avg[cal_nr] = tmp_file_cal[[cal_nr]][10]
+      time_cal[cal_nr] = as.numeric(strsplit(tmp_file_cal[[cal_nr]],
+                                             split="\t")[[1]][2], split=" ")
+    }
+  }
+  
+  # create a dataframe out of the calibration vectors
+  cal_df = data.frame(calibration, eye, error_max, error_avg, time_cal)
+  
+  # column type to numeric for max. and avg. calibration error
+  cal_df$error_max=as.numeric(as.character(cal_df$error_max))
+  cal_df$error_avg=as.numeric(as.character(cal_df$error_avg))
+  
+  ################################################
+  ############### EVENT FILE #####################
+  
+  # get the onset/offset info + other stim info for the "event.tsv" file 
+  
+  # note, in this dataset, the practice part included no events and cannot be analyzed
+  
+  # create two subsets: 
+  # (i) with onset & and offset messages of each trial 
+  # (ii) with the onset messages only
+  tmp_file_onset_offset = tmp_file[grepl(
+    paste0(readout$StartMessage,"|",readout$EndMessage),tmp_file)]
+  tmp_file_onset = tmp_file_onset_offset[grepl(
+    readout$StartMessage,tmp_file_onset_offset)]
+  
+  tmp_file_onset_offset = tmp_file_onset_offset[!grepl("MASKSCREEN_START_ue",
+                                                       tmp_file_onset_offset)]
+  tmp_file_onset = tmp_file_onset[!grepl("MASKSCREEN_START_ue",
+                                                       tmp_file_onset)]
+  
+  # loop across event onset messages
+  for (event_nr in 1:length(tmp_file_onset)){
+    
+    # extract the time point for the event onset -> trial onset
+    onset_sample = as.numeric(
+      strsplit(strsplit(tmp_file_onset[event_nr], 
+                        split="\t")[[1]][2],split=" ")[[1]][1])
+    
+    ###### OPTIONAL #####
+    # read out all potentially relevant information about the stimuli 
+    # -> adjustment to the own paradigm!
+    
+    # counter for the trial index
+    info_target_word = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][3]
+    info_color = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][4]
+    info_mask = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][5]
+    info_underlining = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][6]
+    info_aoi_start = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][7]
+    info_sentenceNr = strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][8]
+ 
+    ######################
+    
+    # identify the position (index) of the event onset message ...
+    # ... in the vector with onset & offset messages:
+    index_onset = match(tmp_file_onset[event_nr],tmp_file_onset_offset)  
+    # ... and extract the offset time point
+    offset_sample = as.numeric(strsplit(
+      strsplit(tmp_file_onset_offset[index_onset+1], split="\t")[[1]][2], 
+      split=" ")[[1]][1])
+              
+    
+    # for the first event (resp. 1st trial)
+    # initiate vectors with information about the event: 
+    if (event_nr == 1){
+      # onset of the first event (1st event message):
+      first_onset = onset_sample 
+      # onset time point relative to the onset of the first event 
+      # (i.e., 0 in the 1st trial):
+      onset = onset_sample-first_onset 
+      # onset time point absolute (raw)
+      sample = onset_sample 
+      # event duration, i.e., time difference between the end and the start message
+      duration = offset_sample-onset_sample 
+      
+      ################ OPTIONAL ###############
+      target_word = info_target_word
+      color = info_color
+      mask = info_mask
+      underlining = info_underlining
+      aoi_start = info_aoi_start
+      sentenceNr = info_sentenceNr
+      #########################################
+      
+    }else{
+      # onset time point relative to the first event
+      onset[event_nr] = onset_sample-first_onset 
+      # onset time point absolute
+      sample[event_nr] = onset_sample
+      # event duration
+      duration[event_nr] = offset_sample-onset_sample
+      
+      ################ OPTIONAL ###############
+      target_word[event_nr] = info_target_word
+      color[event_nr] = info_color
+      mask[event_nr] = info_mask
+      underlining[event_nr] = info_underlining
+      aoi_start[event_nr] = info_aoi_start
+      sentenceNr[event_nr] = info_sentenceNr
+      #########################################
+    }
+  }
+  
+  # create a dataframe out of the event information
+  # -> adjust which columns should be included
+  event_df = data.frame(onset,duration,sample,
+                        target_word, color, mask, underlining,
+                        aoi_start, sentenceNr, stringsAsFactors = FALSE) 
+  
+  # an event counter is very practical for futher data processing
+  # sometimes identical to trial counter
+  event_df$event_nr = c(1:length(event_df$onset))
+  
+  event_df$onset = event_df$onset/1000 # transform from ms to s
+  event_df$duration = event_df$duration/1000 # transform from ms to s
+  event_df$trial_type = "Exp.Trial"
+  
+  
+  ########## OPTIONAL - edit EVENT.TSV FILE ##########
+  event_df$color = car::recode(event_df$color, "'K'='black'; 'E'='blue'",
+                               as.factor=FALSE, as.numeric=FALSE)
+  event_df$mask = car::recode(event_df$mask, "'DEG'='degradated';
+                              'LET'='non-degradated'",
+                              as.factor=FALSE, as.numeric=FALSE)
+  event_df$underlining = car::recode(event_df$underlining, "'U'='underlined';
+                              'N'='not underlined'",
+                              as.factor=FALSE, as.numeric=FALSE)
+  event_df$trial = event_df$event_nr
+  for(event in 1:length(event_df$onset)){
+  event_df$aoi_start_x[event] = 
+    strsplit(event_df$aoi_start[event], split = ",")[[1]][1]
+  }
+  event_df$aoi_start_x = as.numeric(event_df$aoi_start_x)
+  aoi = data.frame(x1 = event_df$aoi_start_x, x2 = event_df$aoi_start_x+55,
+                   y1= NA, y2 = NA)
+  for(event in 1:length(event_df$onset)){
+    event_df$aoi[event] = toJSON(as.matrix(aoi[event,]), dataframe = "rows")
+  }
+  event_df$aoi_start = NULL
+  event_df$aoi_start_x = NULL
+  # import matrix with full information about the stimuli
+  # stim_info=read.csv("./stims_final_BIDS.csv", header=TRUE)
+  # stim_info = stim_info[stim_info$trialID %in% event_df$trialID,]
+  # include the information about the aoi and stimuli into the event dataframe
+  # event_df$stim_file = stim_info$stim_file[1:length(event_df$onset)]
+ 
+  event_df = event_df[c("onset", "duration", "sample", "trial_type",
+                        "event_nr","aoi", "trial", "target_word",
+                        "color", "mask", "underlining", "sentenceNr")]
+  #####################
+  
+  
+  ######### BUTTON PRESS ############
+  
+  tmp_file_button = strsplit(tmp_file[grepl(readout$KeyPressMessage, 
+                                            tmp_file)],split = " ")
+  time = NULL
+  trialID = NULL
+  response = NULL
+  for(keypress in 1:length(tmp_file_button)){
+    time[keypress] = strsplit(tmp_file_button[[keypress]][1], split = "\t")[[1]][2]
+    trialID[keypress] = strsplit(tmp_file_button[[keypress]][3], split = "_")[[1]][2]
+    response[keypress] = 
+      strsplit(tmp_file_button[[keypress]][3], split = "_")[[1]][1]
+  }
+  response_file = data.frame(time, trialID, response, stringsAsFactors = FALSE)
+  event_df$response[event_df$target_word%in%response_file$trialID]=
+    response_file$response[response_file$trialID %in% event_df$target_word]
+  event_df$response = car::recode(event_df$response,"'r'=0;'f'=1")
+  ##########################
+  
+  # write the event dataframe 
+  write.table(event_df,row.names = F, 
+              file = paste0(indi_folder_path,"/sub-",sub,
+                            #"_ses-",ses,
+                            "_acq-",acq,
+                            "_task-",readout$Task,"_events.tsv"))  
+  #################################################################
+  ####################### Sidecar JSON File #######################
+  
+  # *.json file with relevant meta-data
+  
+  # extract rows with some general characteristics of the recording
+  info_temp = strsplit(tmp_file[grepl("SAMPLES\tGAZE",tmp_file)],split = "\t")
+  
+  #convert list by list to vectors and finally to a dataframe "info_file"
+  info_file = NULL
+  for (list_nr in 1:length(info_temp)){
+    list_vec = NULL
+    for(l in 1:length(info_temp[[1]])){list_vec[l]=info_temp[[list_nr]][l]}
+    info_file = data.frame(rbind(info_file, list_vec))
+  }
+  
+  # summarize which eyes were tracked
+  if(any(info_file=="RIGHT") & !any(info_file=="LEFT")){eye = "RIGHT"
+  }else if(any(info_file=="LEFT") & !any(info_file=="RIGHT")){eye = "LEFT"
+  }else if(any(info_file=="RIGHT") & any(info_file=="LEFT")){eye = "BOTH"}
+  
+  # extract the information about sampling frequency
+  if(any(info_file[1,]=="RIGHT")&any(info_file[1,]=="LEFT")){position_nr = 6
+  }else{position_nr = 5}
+  
+  sampl_freq = round(as.numeric(strsplit(tmp_file[grepl(
+    "SAMPLES\tGAZE",tmp_file)],split = "\t")[[1]][position_nr],0))
+  
+  ######
+  # list of lists with calibration information for the *.json file
+  
+  # add the calibration time point relative to the onset of the first event
+  cal_df$time_cal = (cal_df$time-first_onset)/1000
+  
+  cal_df$calibration = as.character(cal_df$calibration)
+  cal_df$eye = as.character(cal_df$eye)
+
+  cal_list = jsonlite::toJSON(cal_df,  dataframe = "values",pretty = TRUE)
+  
+    
+  ######################################################################
+  
+  # write .json file with all important general information
+  write(paste0('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t'
+              ,'"FileFormat": "*.asc",\n\t'
+              ,'"StartMessage": "',readout$StartMessage,'",\n\t'
+              ,'"EndMessage": "',readout$EndMessage,'",\n\t'
+              ,'"EventIdentifier": "',readout$EventIdentifier,'",\n\t'
+              ,'"PupilPositionType": "',readout$PupilPositionType,'",\n\t'
+              ,'"RawSamples": "',readout$RawSamples,'",\n\t'
+              ,'"IncludedEvents": ',readout$IncludedEvents,',\n\t'
+              ,'"DetectionAlgorithm": "',readout$DetectionAlgorithm,'",\n\t'
+              ,'"EventReferenceFrame": "',readout$EventReferenceFrame,'",\n\t'
+              ,'"InstitutionName": "',readout$InstitutionName,'",\n\t'
+              ,'"InstitutionAdress": "',readout$InstitutionAddress,'",\n\t'
+              ,'"Manufacturer": "',readout$Manufacturer,'",\n\t'
+              ,'"ManufacturersModelName": "',readout$ManufacturerModelName,'",\n\t'
+              ,'"SoftwareVersion": "',readout$SoftwareVersions,'",\n\t'
+              ,'"TaskDescription": "',readout$TaskDescription,'",\n\t'
+              ,'"Instructions": "',readout$Instructions,'",\n\t'
+              ,'"CalibrationType": "',readout$CalibrationType,'",\n\t'
+              ,'"CalibrationPosition": "',readout$CalibrationPosition,'",\n\t'
+              ,'"CalibrationDistance": "',readout$CalibrationDistance,'",\n\t'
+              ,'"MaximalCalibrationError": "',readout$MaximalCalibrationError,'",\n\t'
+              ,'"AverageCalibrationError": "',readout$AverageCalibrationError,'",\n\t'
+              ,'"RecordedEye": "',eye,'",\n\t'
+              ,'"KeyPressMessage": "',readout$KeyPressMessage,'",\n\t'
+              ,'"ScreenSize": "',readout$ScreenSize,'",\n\t'
+              ,'"ScreenResolution": "',readout$ScreenResolution,'",\n\t'
+              ,'"EyeCameraSettings": "',readout$EyeCameraSetting,'",\n\t'
+              ,'"FeatureDetectionSettings": '
+              ,'"',readout$FeatureDetectionSettings,'",\n\t'
+              ,'"Gaze-Mapping-Settings": "',readout$Gaze.Mapping.Settings,'",\n\t'
+              ,'"DetectionAlgorithmSettings": '
+              ,'"',readout$DetectionAlgorithmSettings,'",\n\t'
+              ,'"RawDataFilters": "',readout$RawDataFilters,'",\n\t'
+              ,'"ImageCoordinates": ',readout$ImageCoordinates,',\n\t'
+              ,'"Eye-CameraCoordinates": "',readout$Eye.CameraCoordinates,'",\n\t'
+              ,'"HeadEye-CenteredCoordinates": '
+              ,'"',readout$HeadEye.CenteredCoordinates,'",\n\t'
+              ,'"CalibrationList":\n'
+              ,cal_list,'\n}')
+              , file = paste0(indi_folder_path,"/sub-",sub,
+                             # "_ses-",ses,
+                             "_acq-",acq, 
+                             "_task-",readout$Task,"_eyetrack.json")) 
+
+}
+
+write(paste0('{\n\t"Name": "',readout$Name,'",\n\t'
+            ,'"BIDSVersion": "',readout$BIDSVersion,'",\n\t'
+            ,'"License": "',readout$License,'",\n\t'
+            ,'"Authors": ',readout$Authors,',\n\t'
+            ,'"Aknowledgements": "',readout$Aknowledgements,'",\n\t'
+            ,'"Funding": "',readout$Funding,'",\n\t'
+            ,'"ReferenceAndLinks": "',readout$ReferenceAndLinks,'",\n\t'
+            ,'"DatasetDOI": "',readout$DatasetDOI,'"\n}')
+            ,file = paste0(output_folder,
+                "task-",readout$Task,"_dataset_description.json"))
+
+
+participant_df = data.frame(participant_id = participant_id)
+
+########OPTIONAL ADD FURTHER USEFULL INFORMATION ABOUT THE PARTICIPANTS###############
+#describe_df = read.table("./descriptives.txt", header = TRUE, sep = ":") 
+#participant_df$age = describe_df$age
+######################################################################################
+
+write.table(participant_df,row.names = F, file = paste0(output_folder,
+                                                   "task-",readout$Task,"_participant.tsv"))
+
+```
