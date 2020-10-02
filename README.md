@@ -1,12 +1,10 @@
 
-# BIDS Eyelink v1.0
+# Eye-Tracking-BIDS
 
-Task: Freeviewing task with happy/sad/neutral faces
+1) Conversion of 3 exemplar datasets (Eyelink) to Eye-Tracking-BIDS
 
-implemented based on proposal https://docs.google.com/document/d/1eggzTCzSHG3AEKhtnEDbcdk-2avXN6I94X8aUPEBVsw/edit#
+implemented based on the proposal BEP20 https://docs.google.com/document/d/1eggzTCzSHG3AEKhtnEDbcdk-2avXN6I94X8aUPEBVsw/edit#
 
-- the converter is implemented for data from Eyelink eyetrackers; for other data, adjustions will be needed
-- please, fill the read out file (readout_file.txt) with all relevent information which will be used mainly for the json files.
--- do not use ':' in yours entries as this is a separator for the dataframe
-- you can add discriptive data of your dataset which will be matched with the *_participant.tsv file
-- please adjust the part of your code where you add specific variables to the event.tsv file. You can also use an extern file to add important variables.
+2) Preprocessing of fixations based on Eye-Tracking-BIDS for all three datasets
+
+written in R language
