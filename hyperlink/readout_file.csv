@@ -1,13 +1,7 @@
 Variable,Entry
-Task,hyperlinks
-StartMessage,MASKSCREEN_START
-EndMessage,TRIAL_RESULT
-EventIdentifier,EFIX
-PupilPositionType,raw pupil position on screen
-RawSamples,recorded
-IncludedEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
-DetectionAlgorithm,SR-Research
-EventReferenceFrame,2D
+GenericFieldsMUST,
+TaskName,hyperlinks
+GenericFieldsSHOULD,
 InstitutionName,University of Salzburg; Department of Psychology
 InstitutionAddress,Hellbrunnerstrasse 34; 5020 Salzburg; Austria
 Manufacturer,SR-Research
@@ -15,22 +9,37 @@ ManufacturerModelName,EYELINK II CL v4.51 Mar 13 2010
 SoftwareVersions,SREB1.10.165 WIN32 LID:5C0F381A Mod:2013.11.08 08:51 MEZ
 TaskDescription,Silent reading with catch trials including a invisible boundary manipulation
 Instructions,Read the following sentences as if you were reading a book or a newspaper.
+CogAtlasID,
+CogPOID,
+DeviceSerialNumber,
+ETspecificFieldsMUST,
+SampleCoordinateUnit,pixel
+SampleCoordinateSystem,gaze-on-screen
+EnvironmentCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
+RawSamples,1
+IncludedEyeMovementEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
+DetectionAlgorithm,SR-Research
+ETspecificFieldsSHOULD,
+StartMessage,MASKSCREEN_START
+EndMessage,TRIAL_RESULT
 CalibrationType,
 CalibrationPosition,
-CalibrationDistance,52cm
+CalibrationUnit,
 MaximalCalibrationError,
 AverageCalibrationError,
-ScreenSize,
-ScreenResolution,1024 x 768 px
 EyeCameraSetting,
 FeatureDetectionSettings,
-Gaze-Mapping-Settings,
+GazeMappingSettings,
 DetectionAlgorithmSettings,
 RawDataFilters,
-ImageCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
-Eye-CameraCoordinates,
-HeadEye-CenteredCoordinates,
+ScreenSize,
+ScreenResolution,1024 x 768 px
+ScreenRefreshRate,
 KeyPressMessage,KEYPRESS
+AOIDefinition,"[""square"",[""x_start"", ""x_stop"", ""y_start"", ""y_stop""]] "
+PupilPositionType,raw pupil position on screen
+PupilFitMethod,
+MetaData,
 Name,Reading Hypertext
 BIDSVersion,1.0
 License,CC-BY 4.0 International license

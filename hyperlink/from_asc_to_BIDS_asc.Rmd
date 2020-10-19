@@ -27,8 +27,8 @@ readout = data.frame(row.names = readout_file$Variable, Entry = readout_file$Ent
 readout = data.frame(t(readout),stringsAsFactors = FALSE)
 
 # set path for the input and output folders
-input_folder = paste0("./",readout$Task,"_raw_data/")
-output_folder = paste0("./",readout$Task,"_raw_data_BIDS/") 
+input_folder = paste0("./",readout$TaskName,"_raw_data/")
+output_folder = paste0("./",readout$TaskName,"_raw_data_BIDS/") 
 
 # list all .asc files in the input folder with raw data 
 input_file_names = list.files(input_folder, pattern= "*.asc$")
@@ -72,7 +72,7 @@ for (file in 1:length(input_file_names)){
             ,paste0(indi_folder_path,"/sub-",sub,
                     #"_ses-",ses,
                     "_acq-",acq,
-                    "_task-",readout$Task,"_eyetrack.asc")
+                    "_task-",readout$TaskName,"_eyetrack.tsv")
             )
   
   # read the [file]*.asc file from the output folder
@@ -80,7 +80,7 @@ for (file in 1:length(input_file_names)){
   tmp_file = readLines(paste0(indi_folder_path,"/sub-",sub,
                              #"_ses-",ses,
                              "_acq-",acq,
-                             "_task-",readout$Task,"_eyetrack.asc"),
+                             "_task-",readout$TaskName,"_eyetrack.tsv"),
                        encoding = "UTF-8")
   
   ##############################################
@@ -150,10 +150,13 @@ for (file in 1:length(input_file_names)){
   tmp_file_onset = tmp_file_onset_offset[grepl(
     readout$StartMessage,tmp_file_onset_offset)]
   
+  # from our knowledge of the dataset we know that we dont want to use the practice
+  # trials and exclude them
   tmp_file_onset_offset = tmp_file_onset_offset[!grepl("MASKSCREEN_START_ue",
                                                        tmp_file_onset_offset)]
   tmp_file_onset = tmp_file_onset[!grepl("MASKSCREEN_START_ue",
                                                        tmp_file_onset)]
+ 
   
   # loop across event onset messages
   for (event_nr in 1:length(tmp_file_onset)){
@@ -163,11 +166,15 @@ for (file in 1:length(input_file_names)){
       strsplit(strsplit(tmp_file_onset[event_nr], 
                         split="\t")[[1]][2],split=" ")[[1]][1])
     
+    event_identifier = strsplit(strsplit(
+      strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split=" ")[[1]][3], 
+      split = ",")[[1]][1]
+    
     ###### OPTIONAL #####
     # read out all potentially relevant information about the stimuli 
     # -> adjustment to the own paradigm!
     
-    # counter for the trial index
+    
     info_target_word = strsplit(
       strsplit(tmp_file_onset[event_nr], split="\t")[[1]][2],split="_")[[1]][3]
     info_color = strsplit(
@@ -205,6 +212,7 @@ for (file in 1:length(input_file_names)){
       # event duration, i.e., time difference between the end and the start message
       duration = offset_sample-onset_sample 
       
+      eventIdentifier = event_identifier
       ################ OPTIONAL ###############
       target_word = info_target_word
       color = info_color
@@ -222,6 +230,7 @@ for (file in 1:length(input_file_names)){
       # event duration
       duration[event_nr] = offset_sample-onset_sample
       
+      eventIdentifier[event_nr] = event_identifier
       ################ OPTIONAL ###############
       target_word[event_nr] = info_target_word
       color[event_nr] = info_color
@@ -235,7 +244,7 @@ for (file in 1:length(input_file_names)){
   
   # create a dataframe out of the event information
   # -> adjust which columns should be included
-  event_df = data.frame(onset,duration,sample,
+  event_df = data.frame(onset,duration,sample,eventIdentifier,
                         target_word, color, mask, underlining,
                         aoi_start, sentenceNr, stringsAsFactors = FALSE) 
   
@@ -263,21 +272,17 @@ for (file in 1:length(input_file_names)){
     strsplit(event_df$aoi_start[event], split = ",")[[1]][1]
   }
   event_df$aoi_start_x = as.numeric(event_df$aoi_start_x)
-  aoi = data.frame(x1 = event_df$aoi_start_x, x2 = event_df$aoi_start_x+55,
-                   y1= NA, y2 = NA)
+  aoi = data.frame(x1 = event_df$aoi_start_x-11, x2 = event_df$aoi_start_x+66,
+                   y1= 384, y2 = 384)
   for(event in 1:length(event_df$onset)){
     event_df$aoi[event] = toJSON(as.matrix(aoi[event,]), dataframe = "rows")
   }
   event_df$aoi_start = NULL
   event_df$aoi_start_x = NULL
-  # import matrix with full information about the stimuli
-  # stim_info=read.csv("./stims_final_BIDS.csv", header=TRUE)
-  # stim_info = stim_info[stim_info$trialID %in% event_df$trialID,]
-  # include the information about the aoi and stimuli into the event dataframe
-  # event_df$stim_file = stim_info$stim_file[1:length(event_df$onset)]
+
  
   event_df = event_df[c("onset", "duration", "sample", "trial_type",
-                        "event_nr","aoi", "trial", "target_word",
+                        "eventIdentifier","event_nr","aoi", "trial", "target_word",
                         "color", "mask", "underlining", "sentenceNr")]
   #####################
   
@@ -306,7 +311,7 @@ for (file in 1:length(input_file_names)){
               file = paste0(indi_folder_path,"/sub-",sub,
                             #"_ses-",ses,
                             "_acq-",acq,
-                            "_task-",readout$Task,"_events.tsv"))  
+                            "_task-",readout$TaskName,"_events.tsv"))  
   #################################################################
   ####################### Sidecar JSON File #######################
   
@@ -350,16 +355,7 @@ for (file in 1:length(input_file_names)){
   ######################################################################
   
   # write .json file with all important general information
-  write(paste0('{\n\t"SamplingFrequency": ',sampl_freq,',\n\t'
-              ,'"FileFormat": "*.asc",\n\t'
-              ,'"StartMessage": "',readout$StartMessage,'",\n\t'
-              ,'"EndMessage": "',readout$EndMessage,'",\n\t'
-              ,'"EventIdentifier": "',readout$EventIdentifier,'",\n\t'
-              ,'"PupilPositionType": "',readout$PupilPositionType,'",\n\t'
-              ,'"RawSamples": "',readout$RawSamples,'",\n\t'
-              ,'"IncludedEvents": ',readout$IncludedEvents,',\n\t'
-              ,'"DetectionAlgorithm": "',readout$DetectionAlgorithm,'",\n\t'
-              ,'"EventReferenceFrame": "',readout$EventReferenceFrame,'",\n\t'
+ writeLines(paste0('{\n\t"TaskName": "',readout$TaskName,'",\n\t'
               ,'"InstitutionName": "',readout$InstitutionName,'",\n\t'
               ,'"InstitutionAdress": "',readout$InstitutionAddress,'",\n\t'
               ,'"Manufacturer": "',readout$Manufacturer,'",\n\t'
@@ -367,36 +363,54 @@ for (file in 1:length(input_file_names)){
               ,'"SoftwareVersion": "',readout$SoftwareVersions,'",\n\t'
               ,'"TaskDescription": "',readout$TaskDescription,'",\n\t'
               ,'"Instructions": "',readout$Instructions,'",\n\t'
-              ,'"CalibrationType": "',readout$CalibrationType,'",\n\t'
-              ,'"CalibrationPosition": "',readout$CalibrationPosition,'",\n\t'
-              ,'"CalibrationDistance": "',readout$CalibrationDistance,'",\n\t'
-              ,'"MaximalCalibrationError": "',readout$MaximalCalibrationError,'",\n\t'
-              ,'"AverageCalibrationError": "',readout$AverageCalibrationError,'",\n\t'
-              ,'"RecordedEye": "',eye,'",\n\t'
+            #  ,'"CogAtlasID": "',readout$CogAtlasID,'",\n\t'
+            #  ,'"CogPoID": "',readout$CogPOID,'",\n\t'
+            #  ,'"DeviceSerialNumber": "',readout$DeviceSerialNumber,'",\n\t'
+
+              ,'"SamplingFrequency": ',sampl_freq,',\n\t'
+              ,'"SampleCoordinateUnit": "',readout$SampleCoordinateUnit,'",\n\t'
+              ,'"SampleCoordinateSystem": "',readout$SampleCoordinateSystem,'",\n\t'
+              ,'"EnvironmentCoordinates": ',readout$EnvironmentCoordinates,',\n\t'
+              ,'"EventIdentifier": ',toJSON(event_df$eventIdentifier),',\n\t'
+              ,'"RawSamples": ',readout$RawSamples,',\n\t'
+              ,'"IncludedEyeMovementEvents": '
+              ,readout$IncludedEyeMovementEvents,',\n\t'
+              ,'"DetectionAlgorithm": "',readout$DetectionAlgorithm,'",\n\t'
+              ,'"StartMessage": "',readout$StartMessage,'",\n\t'
+              ,'"EndMessage": "',readout$EndMessage,'",\n\t'
               ,'"KeyPressMessage": "',readout$KeyPressMessage,'",\n\t'
-              ,'"ScreenSize": "',readout$ScreenSize,'",\n\t'
+            #  ,'"CalibrationType": "',readout$CalibrationType,'",\n\t'
+            #  ,'"CalibrationPosition": "',readout$CalibrationPosition,'",\n\t'
+            #  ,'"CalibrationUnit": "',readout$CalibrationUnit,'",\n\t'
+            #  ,'"MaximalCalibrationError": '
+            #  ,'"',readout$MaximalCalibrationError,'",\n\t'
+            #  ,'"AverageCalibrationError": '
+            #  ,'"',readout$AverageCalibrationError,'",\n\t'
+              ,'"RecordedEye": "',eye,'",\n\t'
+            #  ,'"EyeCameraSettings": "',readout$EyeCameraSetting,'",\n\t'
+            #  ,'"FeatureDetectionSettings": '
+            #  ,'"',readout$FeatureDetectionSettings,'",\n\t'
+            #  ,'"GazeMappingSettings": "',readout$GazeMappingSettings,'",\n\t'
+            #  ,'"DetectionAlgorithmSettings": '
+            #  ,'"',readout$DetectionAlgorithmSettings,'",\n\t'
+            #  ,'"RawDataFilters": "',readout$RawDataFilters,'",\n\t'
+            #  ,'"ScreenSize": "',readout$ScreenSize,'",\n\t'
               ,'"ScreenResolution": "',readout$ScreenResolution,'",\n\t'
-              ,'"EyeCameraSettings": "',readout$EyeCameraSetting,'",\n\t'
-              ,'"FeatureDetectionSettings": '
-              ,'"',readout$FeatureDetectionSettings,'",\n\t'
-              ,'"Gaze-Mapping-Settings": "',readout$Gaze.Mapping.Settings,'",\n\t'
-              ,'"DetectionAlgorithmSettings": '
-              ,'"',readout$DetectionAlgorithmSettings,'",\n\t'
-              ,'"RawDataFilters": "',readout$RawDataFilters,'",\n\t'
-              ,'"ImageCoordinates": ',readout$ImageCoordinates,',\n\t'
-              ,'"Eye-CameraCoordinates": "',readout$Eye.CameraCoordinates,'",\n\t'
-              ,'"HeadEye-CenteredCoordinates": '
-              ,'"',readout$HeadEye.CenteredCoordinates,'",\n\t'
+            #  ,'"ScreenRefreshRate": "',readout$ScreenRefreshRate,'",\n\t'
+              ,'"AOIDefinition": ',readout$AOIDefinition,',\n\t'
+              ,'"PupilPositionType": "',readout$PupilPositionType,'",\n\t'
+            #  ,'"PupilFitMethod": "',readout$PupilFitMethod,'",\n\t'
               ,'"CalibrationList":\n'
               ,cal_list,'\n}')
-              , file = paste0(indi_folder_path,"/sub-",sub,
+              , paste0(indi_folder_path,"/sub-",sub,
                              # "_ses-",ses,
                              "_acq-",acq, 
-                             "_task-",readout$Task,"_eyetrack.json")) 
+                             "_task-",readout$TaskName,"_eyetrack.json"),
+            useBytes=T) 
 
 }
 
-write(paste0('{\n\t"Name": "',readout$Name,'",\n\t'
+writeLines(paste0('{\n\t"Name": "',readout$Name,'",\n\t'
             ,'"BIDSVersion": "',readout$BIDSVersion,'",\n\t'
             ,'"License": "',readout$License,'",\n\t'
             ,'"Authors": ',readout$Authors,',\n\t'
@@ -404,8 +418,9 @@ write(paste0('{\n\t"Name": "',readout$Name,'",\n\t'
             ,'"Funding": "',readout$Funding,'",\n\t'
             ,'"ReferenceAndLinks": "',readout$ReferenceAndLinks,'",\n\t'
             ,'"DatasetDOI": "',readout$DatasetDOI,'"\n}')
-            ,file = paste0(output_folder,
-                "task-",readout$Task,"_dataset_description.json"))
+            ,paste0(output_folder,
+                "task-",readout$TaskName,"_dataset_description.json"),
+           useBytes=T)
 
 
 participant_df = data.frame(participant_id = participant_id)
@@ -416,6 +431,6 @@ participant_df = data.frame(participant_id = participant_id)
 ######################################################################################
 
 write.table(participant_df,row.names = F, file = paste0(output_folder,
-                                                   "task-",readout$Task,"_participant.tsv"))
+                                                   "task-",readout$TaskName,"_participant.tsv"))
 
 ```

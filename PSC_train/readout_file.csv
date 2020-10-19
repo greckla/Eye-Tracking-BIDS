@@ -1,13 +1,7 @@
 Variable,Entry
-Task,PSC_train
-StartMessage,SENTENCESTART
-EndMessage,SENTENCESTOP
-EventIdentifier,EFIX
-PupilPositionType,raw pupil position on screen
-RawSamples,recorded
-IncludedEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
-DetectionAlgorithm,SR-Research
-EventReferenceFrame,2D
+GenericFieldsMUST,
+TaskName,PSC_train
+GenericFieldsSHOULD,
 InstitutionName,Goethe-University of Frankfurt; Department of Psychology
 InstitutionAddress,Theodor-W.-Adorno-Platz 6 60323 Frankfurt am Main; Germany
 Manufacturer,SR-Research
@@ -15,22 +9,37 @@ ManufacturerModelName,EYELINK II CL v4.56 Aug 18 2010
 SoftwareVersions,SREB1.10.1630 WIN32 LID:F2AE011 Mod:2017.04.21 15:19 CEST
 TaskDescription,Sentence reading
 Instructions,Read sentences as you would read a book or a newspaper
+CogAtlasID,
+CogPOID,
+DeviceSerialNumber,
+ETspecificFieldsMUST,
+SampleCoordinateUnit,pixel
+SampleCoordinateSystem,gaze-on-screen
+EnvironmentCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
+RawSamples,1
+IncludedEyeMovementEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
+DetectionAlgorithm,SR-Research
+ETspecificFieldsSHOULD,
+StartMessage,SENTENCESTART
+EndMessage,SENTENCESTOP
 CalibrationType,
 CalibrationPosition,
-CalibrationDistance,60cm
+CalibrationUnit,
 MaximalCalibrationError,
 AverageCalibrationError,
-ScreenSize,38.6 x 29 cm (19 inches)
-ScreenResolution,1024 x 768 px
 EyeCameraSetting,
 FeatureDetectionSettings,
-Gaze-Mapping-Settings,
+GazeMappingSettings,
 DetectionAlgorithmSettings,
 RawDataFilters,
-ImageCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
-Eye-CameraCoordinates,
-HeadEye-CenteredCoordinates,
+ScreenSize,38.6 x 29 cm (19 inches)
+ScreenResolution,1024 x 768 px
+ScreenRefreshRate,
 KeyPressMessage,ANSWER
+AOIDefinition,"[""square"",[""x_start"", ""x_stop"", ""y_start"", ""y_stop""]] "
+PupilPositionType,raw pupil position on screen
+PupilFitMethod,
+MetaData,
 Name,PSC Pre-Post Diagnostic
 BIDSVersion,1.0
 License,CC-BY 4.0 International license

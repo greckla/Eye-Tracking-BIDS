@@ -19,8 +19,8 @@ path = "./freeviewfaces_raw_data_BIDS"
 subjects = list.dirs(path, recursive = T)
 subjects = subjects[grepl(pattern="eyetrack", x = subjects)]
 
-# get full file names for *.asc, *.json and *events.tsv files
-input_file_pathways = list.files(subjects, pattern = "*.asc$",full.names = T)
+# get full file names for *eyetrack.tsv, *.json and *events.tsv files
+input_file_pathways = list.files(subjects, pattern = "*eyetrack.tsv$",full.names = T)
 input_event_pathways = list.files(subjects, pattern = "*events.tsv$",full.names = T)
 input_json_pathways = list.files(subjects, pattern = "*.json$",full.names = T)
 ```
@@ -29,9 +29,9 @@ input_json_pathways = list.files(subjects, pattern = "*.json$",full.names = T)
 ```{r}
 dat_fix_all = data.frame() # initiate the dataframe for the preprocessed fixations
 
-# loop across the *.asc files which should be preprocessed
+# loop across the *.tsv files which should be preprocessed
 for (input_file in 1:length(input_file_pathways)){
-  tmp_file = readLines(input_file_pathways[input_file]) # read the *.asc file
+  tmp_file = readLines(input_file_pathways[input_file]) # read the *.tsv file
   # extract the file name
   file_name = strsplit(input_file_pathways[input_file], split = "eyetrack/")[[1]][2] 
   # extract the individual code by subject and experimental session
