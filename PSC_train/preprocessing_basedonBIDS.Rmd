@@ -20,7 +20,7 @@ subjects = list.dirs(path, recursive = T)
 subjects = subjects[grepl(pattern="eyetrack", x = subjects)]
 
 # get full file names for *.asc, *.json and *events.tsv files
-input_file_pathways = list.files(subjects, pattern = "*eyetrack.tsv$",full.names = T)
+input_file_pathways = list.files(subjects, pattern = "*eyetrack.asc$",full.names = T)
 input_event_pathways = list.files(subjects, pattern = "*events.tsv$",full.names = T)
 input_json_pathways = list.files(subjects, pattern = "*.json$",full.names = T)
 ```

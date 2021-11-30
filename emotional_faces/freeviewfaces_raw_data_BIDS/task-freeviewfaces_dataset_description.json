@@ -1,6 +1,6 @@
 {
 	"Name": "Emotional Faces Dataset",
-	"BIDSVersion": "1",
+	"BIDSVersion": "v1.x.x",
 	"License": "CC-BY 4.0 International license",
 	"Authors": ["Ulrike Basten", "Rebecca Mayer", "Klara Gregorova", "Benjamin Gagl"],
 	

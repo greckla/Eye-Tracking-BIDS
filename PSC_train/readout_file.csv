@@ -41,7 +41,7 @@ PupilPositionType,raw pupil position on screen
 PupilFitMethod,
 MetaData,
 Name,PSC Pre-Post Diagnostic
-BIDSVersion,1
+BIDSVersion,v1.x.x
 License,CC-BY 4.0 International license
 Authors,"[""Klara Gregorova"", ""Benjamin Gagl""]"
 Aknowledgements,

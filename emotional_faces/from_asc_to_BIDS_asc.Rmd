@@ -71,7 +71,7 @@ for (file in 1:length(input_file_names)){
             ,paste0(indi_folder_path,"/sub-",sub,
                     "_ses-",ses,
                     #"_acq-",acq,
-                    "_task-",readout$TaskName,"_eyetrack.tsv")
+                    "_task-",readout$TaskName,"_eyetrack.asc")
             )
   
   # read the [file]*.asc file from the output folder
@@ -79,7 +79,7 @@ for (file in 1:length(input_file_names)){
   tmp_file = readLines(paste0(indi_folder_path,"/sub-",sub,
                               "_ses-",ses,
                               #"_acq-",acq,
-                              "_task-",readout$TaskName,"_eyetrack.tsv"),
+                              "_task-",readout$TaskName,"_eyetrack.asc"),
                        encoding = "UTF-8")
   
   ##############################################
