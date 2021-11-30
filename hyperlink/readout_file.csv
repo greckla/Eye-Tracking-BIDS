@@ -16,12 +16,16 @@ ETspecificFieldsMUST,
 SampleCoordinateUnit,pixel
 SampleCoordinateSystem,gaze-on-screen
 EnvironmentCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
-RawSamples,1
+ScreenSize,n/a
+ScreenResolution,1024 x 768 px
+ScreenDistance,60 cm
+ETspecificFieldsSHOULD,
 IncludedEyeMovementEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
 DetectionAlgorithm,SR-Research
-ETspecificFieldsSHOULD,
+DetectionAlgorithmSettings,
 StartMessage,MASKSCREEN_START
 EndMessage,TRIAL_RESULT
+KeyPressMessage,KEYPRESS
 CalibrationType,
 CalibrationPosition,
 CalibrationUnit,
@@ -30,18 +34,14 @@ AverageCalibrationError,
 EyeCameraSetting,
 FeatureDetectionSettings,
 GazeMappingSettings,
-DetectionAlgorithmSettings,
 RawDataFilters,
-ScreenSize,
-ScreenResolution,1024 x 768 px
 ScreenRefreshRate,
-KeyPressMessage,KEYPRESS
 AOIDefinition,"[""square"",[""x_start"", ""x_stop"", ""y_start"", ""y_stop""]] "
 PupilPositionType,raw pupil position on screen
 PupilFitMethod,
 MetaData,
 Name,Reading Hypertext
-BIDSVersion,1.0
+BIDSVersion,1
 License,CC-BY 4.0 International license
 Authors,"[""Benjamin Gagl""]"
 Aknowledgements,"I want to thank Arturo Hernandez for helpful discussions and comments on an earlier version of the manuscript. I also want to thank Susanne Eisenhauer, Kirsten Hilger and Edvard Heikel for comments on an earlier version and Agnes Altmanninger, Pia Schweitzer and Eva Daspelgruber for helping with the data acquisition. Finally, I want to thank Florian Hutzler for letting me use his laboratory and Stefan Hawelka since part of the current software used in the project was scripted in collaboration for previous studies."

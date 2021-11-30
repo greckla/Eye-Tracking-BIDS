@@ -1,6 +1,6 @@
 {
 	"Name": "PSC Pre-Post Diagnostic",
-	"BIDSVersion": "1.0",
+	"BIDSVersion": "1",
 	"License": "CC-BY 4.0 International license",
 	"Authors": ["Klara Gregorova", "Benjamin Gagl"],
 	

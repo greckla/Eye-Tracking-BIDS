@@ -16,12 +16,16 @@ ETspecificFieldsMUST,
 SampleCoordinateUnit,pixel
 SampleCoordinateSystem,gaze-on-screen
 EnvironmentCoordinates,"[[""0,0"", ""top left""], [""1,1"", ""bottom right""]]"
-RawSamples,1
+ScreenSize,47.2 x 29.5 cm
+ScreenResolution,1680 x 1050 px
+ScreenDistance,60 cm
+ETspecificFieldsSHOULD,
 IncludedEyeMovementEvents,"[[""Start of fixation"", ""SFIX""],[""End of fixation"", ""EFIX""],[""Start of saccade"", ""SSACC""], [""End of saccade"", ""ESACC""],[""Start of blink"", ""SBLINK""], [""End of blink"", ""EBLINK""]]"
 DetectionAlgorithm,SR-Research
-ETspecificFieldsSHOULD,
+DetectionAlgorithmSettings,
 StartMessage,FACESTART
 EndMessage,ENDPRESENTATION
+KeyPressMessage,
 CalibrationType,
 CalibrationPosition,
 CalibrationUnit,
@@ -30,18 +34,14 @@ AverageCalibrationError,
 EyeCameraSetting,
 FeatureDetectionSettings,
 GazeMappingSettings,
-DetectionAlgorithmSettings,
 RawDataFilters,
-ScreenSize,47.2 x 29.5 cm
-ScreenResolution,1680 x 1050 px
 ScreenRefreshRate,
-KeyPressMessage,
 AOIDefinition,"[""square"",[""x_start"", ""x_stop"", ""y_start"", ""y_stop""]] "
 PupilPositionType,raw pupil position on screen
 PupilFitMethod,
 MetaData,
 Name,Emotional Faces Dataset
-BIDSVersion,1.0
+BIDSVersion,1
 License,CC-BY 4.0 International license
 Authors,"[""Ulrike Basten"", ""Rebecca Mayer"", ""Klara Gregorova"", ""Benjamin Gagl""]"
 Aknowledgements,
